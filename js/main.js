@@ -94,6 +94,7 @@ writePictogramList(tx,results);
 
 
           function copyPhrase(phraseId){
+            alert(FOLDER_IMAGES);
             var phraseLabel = document.getElementById(phraseId);
         var divContainer = document.createElement("div");
         divContainer.setAttribute("id", "result_phrase_"+phraseId)
