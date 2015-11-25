@@ -15,11 +15,5 @@
   * Mónica Elizabeth Chavez Estrada
 </author>
 
-<<<<<<< HEAD
-<!--<plugin name="Storage" value="org.apache.cordova.Storage" />-->
 <icon src="icon.png" />
 </widget>
-=======
-
-</widget>
->>>>>>> origin/master
