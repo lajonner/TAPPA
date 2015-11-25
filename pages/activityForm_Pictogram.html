@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+        <link href="../dist/css/timeline.css" rel="stylesheet">
+        <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+        <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
+        <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="../js/cordova-2.2.0.js"></script>
+        <script type<script type="text/javascript" charset="utf-8" src="../js/db.js"></script>
+       <script type<script type="text/javascript" charset="utf-8" src="../js/pictogram.js"></script>
+        <script type="text/javascript" charset="utf-8" src="../js/activityController.js"></script>
+        <script type="text/javascript" charset="utf-8"> </script> 
+          <script> 
+          var fileName=null;
+          var vars=getVars(document);
+          function exitActivity(){
+            var ref="";
+          var vars=getVars(document);        
+            if (vars.hasOwnProperty("category_id")){
+              categoryId=Number(vars["category_id"]);         
+              ref=ref+"?category_id="+categoryId
+            }            
+            location.href="../pages/activitySearch_Pictogram.html"+ref;
+          }
+          var action=vars["action"];
+          function isValidateFields(){
+            var fld_name = document.getElementById("fld_name");
+            var fld_category = document.getElementById("fld_category_id");
+            var fld_file = document.getElementById("fld_file");                          
+            var category = fld_category.selectedIndex;
+           var name = fld_name.value;
+var file = fld_file.value;
+              if (name==null){
+                 alert("Campo Nombre no puede estar vacio.VERIFIQUE!");
+                fld_name.focus();
+                 return false;
+              }
+              if (name.trim().length<=0){
+                 alert("Campo Nombre no puede contener solo espacios en blanco.VERIFIQUE!");
+                 fld_name.focus();
+                 return false;
+              }
+              if (category<0){
+ alert("Campo Categoría no puede estar vacio.VERIFIQUE!");
+                 fld_category.focus();
+                 return false;
+              }
+              return true;
+          }
+          function getvals(){
+                  var fld_category = document.getElementById("fld_category_id");
+                  var position=fld_category.selectedIndex;
+                  var categories = fld_category.options;
+                  var id_category_selected=categories[position].id;
+                  var category_id=id_category_selected.split("_")[1];
+                  var name = document.getElementById("fld_name").value;
+                  return {"name":name,"category_id":Number(category_id)};
+          }
+          function saveRecord(){
+            switch(action){
+              case "1":
+                if (isValidateFields()){
+                  var insertvals=getvals();
+                  var fld_file = document.getElementById("fld_file");
+var fileName=fld_file.files[0].name;
+                  insertvals["file"]=fileName;
+                  insertDB("PICTOGRAM",insertvals);
+                  alert("Registro creado con éxito");
+                  exitActivity();
+                }
+              break;
+             case "2":
+              if (isValidateFields()){
+               var id=Number(vars["id"]);
+                                var updatevals=getvals();
+              var fld_file = document.getElementById("fld_file");
+var fileName=fld_file.name;
+    if(fld_file.files!=null){
+      if(fld_file.files[0]!=null){
+     fileName=fld_file.files[0].name;    
+   }else{
+fileName=fld_file.name;
+   }     
+    }
+                  updatevals["file"]=fileName;
+                updateDB("PICTOGRAM",id,updatevals);
+                alert("Registro actualizado con éxito");
+                exitActivity();
+              }
+              break;               
+            }          
+          }
+          </script>
+  </head>
+
+  <body>
+      <div id="wrapper">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">                
+                <a class="navbar-brand" >Pictograma</a>                
+           
+            </div>
+            <ul class="nav navbar-top-links navbar-right">         
+                                                               
+            </ul>         
+            
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">                       
+                        
+                        <li class="active">
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i>Menú<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse in">
+                              <li>
+                                <li><a href="#" onclick="saveRecord()">Grabar</a></li>
+       <li><a href="#" onclick="exitActivity()">Salir</a></li> 
+                               </li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+
+        </nav>
+
+        <div id="page-wrapper">         
+             
+       <div class="col-lg-6">
+                                    <form role="form">
+                                      <div class="form-group">
+                                            <label>Categoría</label>
+                                            <select class="form-control" id="fld_category_id">
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Descripción</label>
+                                            <input class="form-control" id="fld_name" >
+                                            <p class="help-block">Nombre o descripción de la imagen.</p>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Archivo</label>
+                                            <input type="file" id="fld_file" value="alert.png">
+                                        </div>
+                                          <div class="form-group"> <img src="#" id="result_img_file" alt="Tu imagen"  width="300" height="300"></div>
+                                       
+                                    </form>
+                                </div>
+      </div>       
+        </div>
+     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="../bower_components/raphael/raphael-min.js"></script>
+    <script src="../bower_components/morrisjs/morris.min.js"></script>
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+  </body>
+
+<script type="text/javascript">
+  function showImage(input){
+            if(input.files && input.files[0]){
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                $('#result_img_file').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+            }
+          }
+          $('#fld_file').change(function(){
+            showImage(this);
+          });
+          var vars=getVars(document);
+          var action=vars["action"];
+          loadPictogramCategoryList(dbObject);
+         switch(action){
+          case "1":
+              fileName=null;
+          break;
+            case "2":
+            loadPictogramForm(dbObject,Number(vars["id"]));
+            break;
+         }
+    </script>
+
+</html>
