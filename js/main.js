@@ -1,4 +1,4 @@
-var FOLDER_IMAGES=Environment.getExternalStorageState()+"/Images/PICTOGRAMAS/";
+var FOLDER_IMAGES="../PICTOGRAMAS";
 var WIDTH_IMAGE=35;
 var HEIGHT_IMAGE=35;
 

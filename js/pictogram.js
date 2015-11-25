@@ -1,5 +1,4 @@
-var FOLDER_IMAGES=Environment.getExternalStorageState()+"/Images/PICTOGRAMAS/";
-var WIDTH_IMAGE=35;
+var FOLDER_IMAGES="../PICTOGRAMAS";
 var HEIGHT_IMAGE=35;
 
     function getLimitRecords(){
