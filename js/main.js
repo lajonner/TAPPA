@@ -71,7 +71,7 @@ writePictogramList(tx,results);
             row=results.rows.item(i);
             var divContainer = document.createElement("div");
             divContainer.setAttribute("id", "pictogram_"+row["id"])
-            divContainer.setAttribute("style","float:left; width:10.0%;");
+            divContainer.setAttribute("style","float:left; width:25.0%;");
             divContainer.setAttribute("draggable","true");
             var innerHtmlBody='<img ondragstart="drag(event)" draggable="true"  title="'+row["name"]+'" src="'+FOLDER_IMAGES+'/'+(row["category_name"])+'/'+  (row['file'])+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
             divContainer.innerHTML=innerHtmlBody;
