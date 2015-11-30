@@ -1,6 +1,3 @@
-var FOLDER_IMAGES="../PICTOGRAMAS";
-var HEIGHT_IMAGE=35;
-
     function getLimitRecords(){
         var limitRecords = document.getElementById("limitRecords");
         return limitRecords.value;
@@ -29,9 +26,9 @@ var HEIGHT_IMAGE=35;
             row=results.rows.item(i);
             var divContainer = document.createElement("div");
             divContainer.setAttribute("id", "pictogram_"+row["id"])
-            divContainer.setAttribute("style","float:left; width:10.0%;");
+            divContainer.setAttribute("style","float:left; width:25.0%;");
              divContainer.setAttribute("class", "btn btn-default");            
-            var innerHtmlBody='<input type="checkbox" id="pict_check_'+row["id"]+'" /><a href="#" onclick="editRecord('+row["id"]+')">'+row["name"]+'</a><br/><img title="'+row["name"]+'" src="'+FOLDER_IMAGES+'/'+row["category_name"]+'/'+row['file']+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
+            var innerHtmlBody='<a href="#"" class="btn btn-xs" onclick="deleteRecord('+row["id"]+')"><i class="fa fa-trash-o"></i></a><a align="justify" href="#" onclick="editRecord('+row["id"]+')">'+row["name"]+'</a><br/><img title="'+row["name"]+'" src="'+FOLDER_IMAGES+'/'+row["category_name"]+'/'+row['file']+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
             divContainer.innerHTML=innerHtmlBody;
             divPictograms.appendChild(divContainer);
             document.close();

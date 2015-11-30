@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TAPPA</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/db.js"></script>
+    <script src="../js/APP.js"></script>
+    <script src="../js/main.js"></script>   
+    <script>
+          var categoryId=0;
+          var indexId=1;
+          function openActivity(pageName) {
+              loadPage('../html/'+pageName+'');
+          };                    
+          function searchLoadPictogramLimit(){
+            var inputRecords=document.getElementById("limitRecords");
+            if(inputRecords.value.length<=0){
+                inputRecords.value=10;
+            }
+            var optionValue = document.getElementById("cboOption").value;
+            var divPictograms = document.getElementById("pictogramList");
+            divPictograms.innerHTML="";
+            var txtSearchValue = document.getElementById("txtSearch").value;
+            if (optionValue=='Pictogramas'){
+              loadPictogramByName(dbObject,txtSearchValue,indexId);  
+              document.close();               
+            }
+            if (optionValue=='Preferencias'){
+              loadPreferences(dbObject,txtSearchValue);  
+              document.close();               
+            }
+          };
+          function allowDrop(ev) {
+            ev.preventDefault();
+          };
+          function drag(ev) {
+              ev.dataTransfer.setData("text", ev.target.id);
+          };
+          function drop(ev) {      
+          if (ev.target.id=="pictogramResult"){
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("text");                              
+                if(data.startsWith("img_")){
+                  ev.target.appendChild(loadImagePictogram(data));
+                }else{  
+                   ev.target.appendChild(copyPhrase(data));
+                }
+          }};
+          function clearResult(){
+           var divPictograms = document.getElementById("pictogramResult");
+           divPictograms.innerHTML="";
+           document.close();
+           cancelPreference();
+          }
+          function addPhrase(){
+           var txtPictogram = document.getElementById("txtSearch").value;
+           if (txtPictogram.length<=0){
+            alert("Frase o palabra.No puede estar vacia.");
+            return false;
+           }
+           if (txtPictogram.trim().length<=0){
+            alert("Frase o palabra.No puede contener solo espacios en blanco.");
+            return false;
+           }
+        var divPictograms = document.getElementById("pictogramResult");       
+        var divContainer = document.createElement("div");
+            divContainer.setAttribute("id","phrase_"+indexId);
+            divContainer.setAttribute("style","float:left; width:10.0%;");
+            divContainer.setAttribute("draggable","true");
+            var innerHtmlBody='<b/><label id="label_phrase_'+indexId+'"  ondragstart="drag(event)" draggable="true">'+txtPictogram+'</label></b>';
+            divContainer.innerHTML=innerHtmlBody;
+            divPictograms.appendChild(divContainer);
+            indexId=indexId+1;
+            return true;
+          }
+          function savePreferences(){
+            var bodyPictogram = document.getElementById("pictogramResult");  
+            if (bodyPictogram.childNodes.length<=0){
+              alert("Deb existir al menos dos pictogramas o frases relacionados");
+              return false;
+            }
+            if (!isValidateFields()){
+              return false;
+            }
+            var txtName = document.getElementById("fld_name");    
+            var txtCode= document.getElementById("fld_code");    
+            var listValues=[];
+            var sequence=1;
+            for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
+                var divx = bodyPictogram.children[x];
+                var eachValues=[null,null,0];
+                if(divx.tagName=="DIV"){
+                  if(divx.id.startsWith("result_img")){
+                      var divPictogramResult = document.getElementById(divx.id);
+                      var divxid_part=(divx.id).split("result_img_");      
+                      var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);
+                      eachValues[0]=divxid_part[1];
+                       eachValues[1]=lblImg.innerHTML;
+                  }else{
+                      var divPhraseResult = document.getElementById(divx.id);
+                      var divxid_part=(divx.id).split("phrase_");
+                      var bPhrase = document.getElementById("label_phrase_"+divxid_part[1]);
+                     eachValues[1]=bPhrase.innerHTML;
+                  }
+                  eachValues[2]=sequence
+                  listValues.push(eachValues);
+                }
+                sequence=sequence+1;
+              }            
+            var code=txtCode.value;            
+            var name=txtName.value;
+            savePreferencesRecord(dbObject,listValues,code,name)
+            cancelPreference();
+            return true;
+          }
+          function isValidateFields(){
+            var bodyPictogram = document.getElementById("pictogramResult");  
+             var fld_name = document.getElementById("fld_name");    
+              var fld_code= document.getElementById("fld_code");   
+           var name = fld_name.value;
+            var code = fld_code.value;
+              if (name==null){
+                 alert("Campo Nombre no puede estar vacio.VERIFIQUE!");
+                fld_name.focus();
+                 return false;
+              }
+              if (name.trim().length<=0){
+                 alert("Campo Nombre no puede contener solo espacios en blanco.VERIFIQUE!");
+                 fld_name.focus();
+                 return false;
+              }
+              if (code==null){
+                 alert("Campo Código no puede estar vacio.VERIFIQUE!");
+                fld_code.focus();
+                 return false;
+              }
+              if (code.trim().length<=0){
+                 alert("Campo Código no puede contener solo espacios en blanco.VERIFIQUE!");
+                 fldcode.focus();
+                 return false;
+              }
+              return true;
+          }
+          function openPreferenceForm(){
+           var $divResult = $('#pictogramResult');
+          var count = $divResult[0].childElementCount;
+          if(count<=0){
+            alert("Debe existir al menos dos Pictogramas o frases relacionados.");
+            return false;
+          }
+          $("#preferenceForm").show(); 
+          clearPreferenceForm();   
+          var bodyPictogram = document.getElementById("pictogramResult");          
+          var allPhrase="";
+          if (bodyPictogram.childNodes.length>0){
+            for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
+                var divx = bodyPictogram.children[x];
+                if(divx.tagName=="DIV"){
+                  if(divx.id.startsWith("result_img")){
+                      var divPictogramResult = document.getElementById(divx.id);
+                      var divxid_part=(divx.id).split("result_img_");      
+                      var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);
+                      allPhrase+=" "+lblImg.innerHTML;
+                  }else{
+                      var divPhraseResult = document.getElementById(divx.id);
+                      var divxid_part=(divx.id).split("phrase_");
+                      var bPhrase = document.getElementById("label_phrase_"+divxid_part[1]);
+                      allPhrase+=" "+bPhrase.innerHTML;
+                  }
+                }
+              }
+            }
+            var txtName = document.getElementById("fld_name");    
+              txtName.value=allPhrase;
+          }        
+          function cancelPreference(){
+           $("#preferenceForm").hide(); 
+          clearPreferenceForm();
+          }
+          function clearPreferenceForm(){
+             var txtName = document.getElementById("fld_name");    
+             var txtCode = document.getElementById("fld_code");   
+             txtName.value=null;
+              txtCode.value=null;
+          }
+           function showAbout() {
+            alert('TAPPA\nTecnología Aplicada para personas con problemas Auditivos\nAutores:\nLajonner Alfonso Crespín Moran\nMónica Elizabeth Chavez Estrada');
+          }
+          function saveParameters(){
+            var fldParameterPath=document.getElementById("fldParameterPath");
+            var pathFile=fldParameterPath.value;
+ if (pathFile==null){
+                 alert("Variable RUTA DE IMAGENES no puede estar vacio.VERIFIQUE!");
+                fldParameterPath.focus();
+                 return false;
+              }
+              if (pathFile.trim().length<=0){
+                 alert("Variable RUTA DE IMAGENES no puede contener solo espacios en blanco.VERIFIQUE!");
+                 fldParameterPath.focus();
+                 return false;
+              }
+saveParameter(dbObject,'PATH_FILE',pathFile);
+alert("Parametros grabados con éxito");
+getParameters();
+searchLoadPictogramLimit();
+return true;
+          }
+         </script>
+
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <header class="main-header">
+
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>T</b>APPA</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>T</b>APPA</span>
+        </a>
+
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- Control Sidebar Toggle Button -->
+              <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+              </li>
+            </ul>
+          </div>
+
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+          <!-- Sidebar user panel -->
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu">
+            <li class="header">Menú</li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-files-o"></i><span>Categoría</span> <i class="fa fa-angle-left pull-right"></i>
+                <span class="label label-primary pull-right" id="counterPictogramList">0</span>
+              </a>
+              <ul class="treeview-menu" id="categoryPictogramList">
+                
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-edit"></i> <span>Opciones</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#" id="option_category" onclick="openActivity('pictogram_category_search.html')"><i class="fa fa-circle-o"></i>Categorías</a></li>
+                <li><a href="#" id="option_pictogram" onclick="openActivity('pictogram_search.html')"><i class="fa fa-circle-o"></i>Pictogramas</a></li>
+                <li><a href="#" id="option_preferences" onclick="openPreferenceForm()"><i class="fa fa-circle-o"></i>Grabar preferencias</a></li>
+                <li><a href="#" id="option_about" onclick="showAbout()"><i class="fa fa-circle-o"></i>Acerca</a></li>
+              </ul>
+            </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <ol class="breadcrumb">
+            <div class="input-group" align="right">
+              <span class="input-group-btn" style="width:25%">
+                            <select class="form-control" onchange="searchLoadPictogramLimit()" id="cboOption">
+                                        <option data-value="pictogram">Pictogramas</option>
+                                        <option data-value="preference">Preferencias</option>                              
+                                </select>
+                           </span>
+              <input type="text" name="q" class="form-control" placeholder="Busqueda..." id="txtSearch"> 
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat" onclick="searchLoadPictogramLimit()"><i class="fa fa-search"></i></button>
+              </span>
+               <span class="input-group-btn" style="width:10%">
+             <input type="number" name="quantity" min="1"  id="limitRecords" class="form-control" onkeypress="searchLoadPictogramLimit()" onclick="searchLoadPictogramLimit()">
+              </span>
+            </div>   
+          </ol>
+        </section>
+<br/>
+<br/>
+        <!-- Main content -->
+        <section class="content">
+          <!-- Info boxes -->
+         
+         <div class="box box-default">
+              <div class="box-header with-border" id="pictogramList">
+              </div>
+            </div>
+           
+
+         <div class="box box-default">
+           <div class="box-header with-border" id="pictogramResultHeader">
+
+             <button class="btn btn-default" type="button" id="btnClear" onclick="clearResult()" title="Limpiar">
+                                    <i class="fa fa-trash-o"></i></button> <button title="Copiar" class="btn btn-default" type="button" id="btnAddPhrase" onclick="addPhrase()">
+                                    <i class="fa fa-paste"></i></button>
+
+              </div>
+              <div class="box-body with-border" id="pictogramResult" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+              </div><!-- /.box-body -->
+
+               <div class="panel panel-default" id="preferenceForm">
+  <div class="panel-heading">
+                            Preferencia
+                        </div>
+   
+<div class="panel-body">
+    <div class="form-group">
+                                            <label>Código</label>
+                                            <input class="form-control" id="fld_code">
+                                            <p class="help-block">Código de busqueda</p>
+                                            <label>Frase</label>
+                                            <input class="form-control" id="fld_name">
+                                            <p class="help-block">Frase completa</p>
+                                        </div>  
+                                        <button class="btn btn-default" type="button"  onclick="savePreferences()" >Grabar<i class="fa fa-save"></i></button>
+                                        
+                                        <button class="btn btn-default" type="button"  onclick="cancelPreference()">Cancelar<i class="fa fa-ban"></i></button>
+
+ </div>  
+</div>
+            </div>
+
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 1.0.0
+        </div>
+        <strong>Copyright &copy; 2015-2016 <a href="http://www.ups.edu.ec/">UPS</a>.</strong> All rights reserved.
+      </footer>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+       
+        <div class="tab-content">
+
+          <!-- Settings tab content -->
+            <form method="post">
+              <h3 class="control-sidebar-heading">Configuración General</h3>
+              <div class="form-group">
+                 <div class="form-group">
+                                            <span class="input-group-btn">
+               <label class="control-sidebar-subheading">Carpeta</label>
+                                           
+            </span>        <input type="text" id="fldParameterPath">
+                                  </div>
+                <p>
+                  Ruta donde se almacenan los pictogramas
+                </p>
+              </div><!-- /.form-group -->
+              <button type="button" class="btn btn-primary" id="btnSaveParamaters" onclick="saveParameters()">Grabar</button>
+            </form>
+        </div>
+      </aside><!-- /.control-sidebar -->
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+
+    </div><!-- ./wrapper -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/app.min.js"></script>
+    <!-- Sparkline -->
+    <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!-- jvectormap -->
+    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- SlimScroll 1.3.0 -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- ChartJS 1.0.1 -->
+    <script src="plugins/chartjs/Chart.min.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+     <script>
+        document.getElementById("limitRecords").value=10;
+        loadCategoryPictogramList(dbObject);
+        var vars=getVars(document);
+        categoryId=0;
+        if (vars.hasOwnProperty("id")){
+          categoryId=Number(vars["id"]);         
+        }
+        loadPictogramByCategoryId(dbObject,categoryId);
+        cancelPreference();
+        loadParameters(dbObject);
+      </script>
+  </body>
+</html>

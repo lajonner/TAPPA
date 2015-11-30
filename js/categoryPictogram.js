@@ -24,8 +24,8 @@ function writeCategoryList(tx, results){
             var divContainer = document.createElement("div");
             divContainer.setAttribute("id", "category_"+row["id"]);
             divContainer.setAttribute("class", "btn btn-default");            
-            divContainer.setAttribute("style","float:left; width:25%;");
-            divContainer.innerHTML="<br/><input type='checkbox' /><a href='#' onclick='editRecord("+row["id"]+")'>"+row["name"]+"</a><br/><a href='#' onclick='searchPictograms("+row["id"]+")'><b>"+row["counter"]+" Pictogramas</b></a>";            
+            divContainer.setAttribute("style","float:left; width:33.33%;");
+        divContainer.innerHTML="<br/><a href='#' class='btn btn-xs' onclick='deleteRecord("+row["id"]+")'><i class='fa fa-trash-o'></i></a><a href='#' onclick='editRecord("+row["id"]+")'>"+row["name"]+"</a><br/><a href='#' onclick='searchPictograms("+row["id"]+")'><b>"+row["counter"]+" Pictogramas</b></a>";            
             divCategories.appendChild(divContainer);
             document.close();
         }  

@@ -1,7 +1,11 @@
-var DATABASE_NAME="TAPPA_FINAL_BASE"
+var DATABASE_NAME="TAPPA_FINAL_BASE005"
 var DATABASE_VERSION="1.0"
-var DATABASE_DESCRIPTION="TAPPA DATA BASE"
+var DATABASE_DESCRIPTION="BASE TAPPA"
 var DATABASE_SIZE=200000
+var WIDTH_IMAGE=35;
+var HEIGHT_IMAGE=35;
+var FOLDER_IMAGES="/";
+
 
 /***INICIALIZACION DE CLASE DE OBJETOS EN BASE DE DATOS***/
     function objectTableDB(name,columns){
@@ -146,8 +150,38 @@ DB.prototype.unlink=function(model,id) {
     function getAllDatas(tx){
         tx.executeSql('SELECT count(id) as counter from PICTOGRAM_CATEGORY order by name asc', [], loadPictogramCategoryDB);
         tx.executeSql('SELECT count(id) as counter from PICTOGRAM order by name asc', [], loadPictogramDB);
+        tx.executeSql("SELECT count(id) as counter from SYSTEM_PARAMETERS where code_parameter='PATH_FILE'", [], loadParametersDB);  
     }
     
+
+    function loadParametersDB(tx, results) {
+       if (results.rows.length>0) {
+        row=results.rows.item(0);
+        if (row["counter"]<=0){
+            var datas=[['PATH_FILE','/']];
+            for (each_value in datas){
+             tx.executeSql("INSERT INTO SYSTEM_PARAMETERS(code_parameter,value_parameter)values(?,?)",datas[each_value]);       
+         }
+         }
+       }
+    }
+
+    
+    function getParameters() {
+        dbObject.executeSql(searchParameters, dbObject.errorDataBase);
+    }
+
+    function searchParameters(tx){
+        tx.executeSql("SELECT value_parameter from SYSTEM_PARAMETERS where code_parameter='PATH_FILE'", [], function(tx,results){
+if (results.rows.length>0) {
+        row=results.rows.item(0);
+        FOLDER_IMAGES=row["value_parameter"];
+       }
+
+        });  
+    }
+
+
     function loadPictogramCategoryDB(tx, results) {
        if (results.rows.length>0) {
         row=results.rows.item(0);
@@ -4299,4 +4333,5 @@ DB.prototype.unlink=function(model,id) {
        }
     } 
 
-    loadDataBase();
+loadDataBase();
+getParameters();

@@ -1,18 +1,27 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="refresh" content="0;url=pages/index.html">
-<title>TAPPA</title>
- <script type="text/javascript" charset="utf-8" src="js/jquery.min.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/cordova-2.2.0.js"></script>
-        <script type<script type="text/javascript" charset="utf-8" src="js/db.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/activityController.js"></script>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/APP.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadPage('html/index.html');
+        });
+    </script>	
+  </head>
+  <body>
+    <div id="div_espera" >
+        <img src="images/loading.gif" style="position:absolute; top:20%; margin: 0 auto; left: 0;right: 0; z-index:1; ">
+    </div>
 
-<script language="javascript">
-    window.location.href = "pages/index.html"
-</script>
-</head>
-<body>
-Loading... <a href="pages/index.html">/pages/index.html</a>
-</body>
+    <div id='master_app'>
+
+    </div>
+  </body>
 </html>

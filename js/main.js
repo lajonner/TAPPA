@@ -1,6 +1,3 @@
-var FOLDER_IMAGES="../PICTOGRAMAS";
-var WIDTH_IMAGE=35;
-var HEIGHT_IMAGE=35;
 
     /**obtener limite de registros a obtener**/
 
@@ -21,11 +18,13 @@ var HEIGHT_IMAGE=35;
     
     function writeCategoryPictogramList(tx, results) {
         var ul = document.getElementById("categoryPictogramList");
-       for (i=0; i< results.rows.length; i++) {
+        var spanPictogram = document.getElementById("counterPictogramList");
+        spanPictogram.innerHTML=""+results.rows.length;            
+        for (i=0; i< results.rows.length; i++) {
             row=results.rows.item(i);
             var li = document.createElement("li");
             li.setAttribute("id", "li_"+row["id"])
-            li.innerHTML='<a onclick="loadPictogramByCategoryId(dbObject,'+row["id"]+')" data-value="'+row["id"]+'" href="#" id="'+row["id"]+'">'+row['name']+'</a>';
+            li.innerHTML='<a onclick="loadPictogramByCategoryId(dbObject,'+row["id"]+')" data-value="'+row["id"]+'" href="#" id="'+row["id"]+'"><i class="fa fa-circle-o"></i>'+row['name']+'</a>';
             ul.appendChild(li);
             document.close();
         }  
@@ -71,7 +70,7 @@ writePictogramList(tx,results);
             row=results.rows.item(i);
             var divContainer = document.createElement("div");
             divContainer.setAttribute("id", "pictogram_"+row["id"])
-            divContainer.setAttribute("style","float:left; width:25.0%;");
+            divContainer.setAttribute("style","float:left; width:10.0%;");
             divContainer.setAttribute("draggable","true");
             var innerHtmlBody='<img ondragstart="drag(event)" draggable="true"  title="'+row["name"]+'" src="'+FOLDER_IMAGES+'/'+(row["category_name"])+'/'+  (row['file'])+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
             divContainer.innerHTML=innerHtmlBody;
@@ -86,7 +85,7 @@ writePictogramList(tx,results);
         divContainer.setAttribute("id", "result_"+imageId)
         divContainer.setAttribute("style","float:left; width:10.0%;");
         divContainer.setAttribute("draggable","true");
-        var innerHtmlBody='<img  title="'+imageContainer.getAttribute("title")+'" src="'+imageContainer.getAttribute("src")+'" id="result_'+imageId+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
+        var innerHtmlBody='<img  class="img-responsive pad" title="'+imageContainer.getAttribute("title")+'" src="'+imageContainer.getAttribute("src")+'" id="result_'+imageId+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
         innerHtmlBody+="<br/><label id='lbl_"+imageId+"' >"+imageContainer.getAttribute("title")+"</label>"
         divContainer.innerHTML=innerHtmlBody;
         return divContainer;
@@ -217,4 +216,28 @@ writePictogramList(tx,results);
                     document.close();            
                 }
         }  
-            
+        
+        function loadParameters(dbObject){
+        dbObject.db.transaction(function(tx) {
+            tx.executeSql("SELECT code_parameter,value_parameter from SYSTEM_PARAMETERS WHERE code_parameter='PATH_FILE'", [], function(tx,results){
+writeParameters(tx,results);
+            });
+        },dbObject.errorDataBase);       
+    }
+
+    function writeParameters(tx, results){
+        var fldParameter = document.getElementById("fldParameterPath");
+        for (var i=0; i< results.rows.length; i++) {
+            row=results.rows.item(i);
+            if (row["code_parameter"]=="PATH_FILE"){
+            fldParameter.value=row["value_parameter"];
+            }
+            document.close();
+        }  
+    } 
+
+    function saveParameter(dbObject,code,value){
+        dbObject.db.transaction(function(tx) {
+            tx.executeSql("UPDATE SYSTEM_PARAMETERS set value_parameter=? WHERE code_parameter=?", [value,code]);
+        },dbObject.errorDataBase);       
+    }
