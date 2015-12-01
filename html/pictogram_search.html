@@ -36,9 +36,7 @@
           return ref;
          }
            function editRecord(editId){
-            alert(editId);
                var vars=getVars(document);
-               alert(vars["category_id"]);
                 loadPage(getURLForm("../html/pictogram_form.html?action=2&id="+editId));
            }
                       function deleteRecord(deleteId){
