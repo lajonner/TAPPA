@@ -61,14 +61,11 @@ return false;
             loadCategoryByName(dbObject,txtCategory);
           };
         function searchPictograms(category_id){
-           loadPage("../html/pictogram_search.html?action=1?category_id="+category_id+"");
+           loadPage("../html/pictogram_search.html?action=0&category_id="+category_id+"");
         }
         </script>   
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
-    <div id="div_espera" >
-        <img src="images/loading.gif" style="position:absolute; top:20%; margin: 0 auto; left: 0;right: 0; z-index:1; ">
-    </div>]+{i}
     <div class="wrapper">
 
       <header class="main-header">
@@ -127,7 +124,7 @@ return false;
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat" onclick="searchLoadCategoryLimit()"><i class="fa fa-search"></i></button>
               </span>
-               <span class="input-group-btn" style="width:10%">
+               <span class="input-group-btn" style="width:8%">
              <input type="number" name="quantity" min="1"  id="limitRecords" class="form-control" onkeypress="searchLoadCategoryLimit()" onclick="searchLoadCategoryLimit()">
               </span>
             </div>   

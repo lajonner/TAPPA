@@ -137,9 +137,9 @@ writePictogramList(tx,results);
             var preferenceId=row["id"]; 
             var divContainer = document.createElement("div");
             divContainer.setAttribute("id", "preference_"+row["id"])           
-            divContainer.setAttribute("style","float:left; width:100%;border:ridge;border-color: #ddd");
+            divContainer.setAttribute("style","float:left; width:100%");
             var divLabel = document.createElement("div");         
-            divLabel.setAttribute("style","float:left; width:10.0%;")
+            divLabel.setAttribute("style","float:left; width:40.0%;")
             divLabel.innerHTML="<button class='btn btn-default' type='button' id='btnSearch' onclick='copyPreference(dbObject,"+row["id"]+")'>"+row["code"]+"<i class='fa fa-search'></i></button><br/><br/><label>"+row["name"]+"</label>";
             divContainer.appendChild(divLabel);  
                 
@@ -164,15 +164,14 @@ writePictogramList(tx,results);
                         divContainerImage.innerHTML=innerHtmlBody;
                         divContainer.appendChild(divContainerImage);
                     }else{
- var divContainerPhrase = document.createElement("div");
-            divContainerPhrase.setAttribute("id","phrase_"+newRow["id"]);
-            divContainerPhrase.setAttribute("style","float:left; width:10.0%;");
-            divContainerPhrase.setAttribute("draggable","true");
-            var innerHtmlBodyPhrase='<b/><label id="label_phrase_'+indexId+'"  ondragstart="drag(event)" draggable="true">'+newRow["phrase"]+'</label></b>';
-            divContainerPhrase.innerHTML=innerHtmlBodyPhrase;
-            indexId=indexId+1;
-            divContainer.appendChild(divContainerPhrase);
-
+                         var divContainerPhrase = document.createElement("div");
+                        divContainerPhrase.setAttribute("id","phrase_"+newRow["id"]);
+                        divContainerPhrase.setAttribute("style","float:left; width:10.0%;");
+                        divContainerPhrase.setAttribute("draggable","true");
+                        var innerHtmlBodyPhrase='<b/><label id="label_phrase_'+indexId+'"  ondragstart="drag(event)" draggable="true">'+newRow["phrase"]+'</label></b>';
+                        divContainerPhrase.innerHTML=innerHtmlBodyPhrase;
+                        indexId=indexId+1;
+                        divContainer.appendChild(divContainerPhrase);
                     }
                     document.close();            
                 }
@@ -180,11 +179,8 @@ writePictogramList(tx,results);
 
             function copyPreference(dbObject,id){            
             dbObject.db.transaction(function(tx) {
-          
-
-             tx.executeSql('SELECT ppl.id,ppl.phrase,p.id as pictogram_id,p.name as name,p.file as file,pc.name as category_name,ppl.preference_id from pictogram_preferences_line ppl left join pictogram p on p.id=ppl.pictogram_id left join pictogram_category pc on pc.id=p.category_id where ppl.preference_id='+id+' order by ppl.sequence asc', [],writePreferenceInResult 
+        tx.executeSql('SELECT ppl.id,ppl.phrase,p.id as pictogram_id,p.name as name,p.file as file,pc.name as category_name,ppl.preference_id from pictogram_preferences_line ppl left join pictogram p on p.id=ppl.pictogram_id left join pictogram_category pc on pc.id=p.category_id where ppl.preference_id='+id+' order by ppl.sequence asc', [],writePreferenceInResult 
         ,dbObject.errorDataBase);  
-
             });
         }
         

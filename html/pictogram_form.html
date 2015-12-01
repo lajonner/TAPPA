@@ -32,7 +32,7 @@
             var ref="";
           var vars=getVars(document);        
             if (vars.hasOwnProperty("category_id")){
-              categoryId=Number(vars["category_id"]);         
+              var categoryId=Number(vars["category_id"]);         
               ref=ref+"?category_id="+categoryId
             }            
              loadPage('../html/pictogram_search.html'+ref);
@@ -233,6 +233,7 @@ fileName=fld_file.name;
           var vars=getVars(document);
           var action=vars["action"];
           loadPictogramCategoryList(dbObject);
+          category_id
          switch(action){
           case "1":
               fileName=null;

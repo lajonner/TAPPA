@@ -104,9 +104,10 @@
             var txtCode= document.getElementById("fld_code");    
             var listValues=[];
             var sequence=1;
-            for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
+            for(var x=0;x<bodyPictogram.childNodes.length;x++) {
                 var divx = bodyPictogram.children[x];
                 var eachValues=[null,null,0];
+if(divx!=null){
                 if(divx.tagName=="DIV"){
                   if(divx.id.startsWith("result_img")){
                       var divPictogramResult = document.getElementById(divx.id);
@@ -124,11 +125,13 @@
                   listValues.push(eachValues);
                 }
                 sequence=sequence+1;
+              }
               }            
             var code=txtCode.value;            
             var name=txtName.value;
             savePreferencesRecord(dbObject,listValues,code,name)
             cancelPreference();
+            clearResult();
             return true;
           }
           function isValidateFields(){
@@ -297,17 +300,17 @@ return true;
         <section class="content-header">
           <ol class="breadcrumb">
             <div class="input-group" align="right">
-              <span class="input-group-btn" style="width:25%">
+              <span class="input-group-btn" style="width:13%">
                             <select class="form-control" onchange="searchLoadPictogramLimit()" id="cboOption">
                                         <option data-value="pictogram">Pictogramas</option>
                                         <option data-value="preference">Preferencias</option>                              
-                                </select>
+                                </select style="width:13%">
                            </span>
-              <input type="text" name="q" class="form-control" placeholder="Busqueda..." id="txtSearch"> 
+              <input type="text" name="q" class="form-control" placeholder="Busqueda..." id="txtSearch">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat" onclick="searchLoadPictogramLimit()"><i class="fa fa-search"></i></button>
               </span>
-               <span class="input-group-btn" style="width:10%">
+               <span class="input-group-btn" style="width:8%">
              <input type="number" name="quantity" min="1"  id="limitRecords" class="form-control" onkeypress="searchLoadPictogramLimit()" onclick="searchLoadPictogramLimit()">
               </span>
             </div>   
