@@ -41,7 +41,7 @@
         }        
         if (name!=null){
             if (name.trim().length>0){
-                where+=" and p.name like '"+name+"%' ";
+                where+=" and p.name like '"+name+"%' or p.name like '%"+name+"%' ";
             }
         }
         dbObject.db.transaction(function(tx) {
@@ -53,7 +53,7 @@
         var where=" ";
         if (name!=null){
             if (name.trim().length>0){
-                where+=" and p.name like '"+name+"%' ";
+                where+=" and p.name like '"+name+"%' or p.name like '%"+name+"%' ";
             }
         }
         dbObject.db.transaction(function(tx) {
@@ -72,7 +72,8 @@ writePictogramList(tx,results);
             divContainer.setAttribute("id", "pictogram_"+row["id"])
             divContainer.setAttribute("style","float:left; width:10.0%;");
             divContainer.setAttribute("draggable","true");
-            var innerHtmlBody='<img ondragstart="drag(event)" draggable="true"  title="'+row["name"]+'" src="'+FOLDER_IMAGES+'/'+(row["category_name"])+'/'+  (row['file'])+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
+            //ondragstart="drag(event)" draggable="true" 
+            var innerHtmlBody='<img  onclick="copyPictogram('+row['id']+',1)" title="'+row["name"]+'" src="'+FOLDER_IMAGES+'/'+(row["category_name"])+'/'+  (row['file'])+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
             divContainer.innerHTML=innerHtmlBody;
             divPictograms.appendChild(divContainer);
             document.close();
@@ -82,11 +83,13 @@ writePictogramList(tx,results);
      function loadImagePictogram(imageId) {
         var imageContainer = document.getElementById(imageId);
         var divContainer = document.createElement("div");
-        divContainer.setAttribute("id", "result_"+imageId)
+        var DIV_ID="result_"+imageId
+        divContainer.setAttribute("id", DIV_ID);
         divContainer.setAttribute("style","float:left; width:10.0%;");
         divContainer.setAttribute("draggable","true");
         var innerHtmlBody='<img  class="img-responsive pad" title="'+imageContainer.getAttribute("title")+'" src="'+imageContainer.getAttribute("src")+'" id="result_'+imageId+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
-        innerHtmlBody+="<br/><label id='lbl_"+imageId+"' >"+imageContainer.getAttribute("title")+"</label>"
+        innerHtmlBody+='<br/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+DIV_ID+"'"+')"><i class="fa fa-trash-o"></i></a>';
+        innerHtmlBody+="<label id='lbl_"+imageId+"' >"+imageContainer.getAttribute("title")+"</label>"
         divContainer.innerHTML=innerHtmlBody;
         return divContainer;
     }
@@ -94,11 +97,14 @@ writePictogramList(tx,results);
 
           function copyPhrase(phraseId){
             var phraseLabel = document.getElementById(phraseId);
+            var phraseParts=phraseId.split("label_");
+            var newPhraseId=phraseParts[1];
         var divContainer = document.createElement("div");
-        divContainer.setAttribute("id", "result_phrase_"+phraseId)
+        divContainer.setAttribute("id", ""+newPhraseId+"cp")
         divContainer.setAttribute("style","float:left; width:10.0%;");
         divContainer.setAttribute("draggable","true");
-        var innerHtmlBody='<b/><label id="label_'+phraseId+'"  ondragstart="drag(event)" draggable="true">'+phraseLabel.innerHTML+'</label></b>';
+        var innerHtmlBody='<b/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+newPhraseId+"cp'"+')"><i class="fa fa-trash-o"></i></a>';
+        innerHtmlBody+='<label id="label_'+newPhraseId+'cp"  ondragstart="drag(event)" draggable="true">'+phraseLabel.innerHTML+'</label></b>';
         divContainer.innerHTML=innerHtmlBody;
         return divContainer;
           }
@@ -118,7 +124,7 @@ writePictogramList(tx,results);
         var where=" ";
         if (preferences!=null){
             if (preferences.trim().length>0){
-                where+=" and pp.code like '"+preferences+"%' or pp.name like '"+preferences+"%'";
+                where+=" and pp.code like '"+preferences+"%' or pp.name like '"+preferences+"%' or pp.name like '%"+preferences+"%'";
             }
         }
             dbObject.db.transaction(function(tx) {
@@ -139,10 +145,9 @@ writePictogramList(tx,results);
             divContainer.setAttribute("id", "preference_"+row["id"])           
             divContainer.setAttribute("style","float:left; width:100%");
             var divLabel = document.createElement("div");         
-            divLabel.setAttribute("style","float:left; width:40.0%;")
-            divLabel.innerHTML="<button class='btn btn-default' type='button' id='btnSearch' onclick='copyPreference(dbObject,"+row["id"]+")'>"+row["code"]+"<i class='fa fa-search'></i></button><br/><br/><label>"+row["name"]+"</label>";
-            divContainer.appendChild(divLabel);  
-                
+            divLabel.setAttribute("style","float:left; width:25.0%;")
+            divLabel.innerHTML="<a href='#' class='btn btn-xs' onclick='deletePreference("+row["id"]+")'><i class='fa fa-trash-o'></i></a><a href='#' onclick='copyPreference(dbObject,"+row["id"]+")'>"+row["code"]+"</a><br/><label>"+row["name"]+"</label>";
+            divContainer.appendChild(divLabel);                 
             tx.executeSql('SELECT ppl.id,ppl.phrase,p.id as pictogram_id,p.name as name,p.file as file,pc.name as category_name,ppl.preference_id from pictogram_preferences_line ppl left join pictogram p on p.id=ppl.pictogram_id left join pictogram_category pc on pc.id=p.category_id where ppl.preference_id='+preferenceId+' order by ppl.sequence asc', [],writePreferencesPictogramList 
         ,dbObject.errorDataBase);  
             document.close();
@@ -151,6 +156,7 @@ writePictogramList(tx,results);
     } 
 
      function writePreferencesPictogramList(newTx,newResults){
+        var flag=1;
                 for (var i=0; i< newResults.rows.length; i++) {
                     var newRow=newResults.rows.item(i);
                 var divContainer = document.getElementById("preference_"+newRow["preference_id"]);                  
@@ -160,20 +166,21 @@ writePictogramList(tx,results);
                         divContainerImage.setAttribute("style","float:left; width:10.0%;");
                         divContainerImage.setAttribute("draggable","true");
                         var innerHtmlBody='<b>'+newRow["phrase"]+'</b>';
-                        var innerHtmlBody='<img ondragstart="drag(event)" draggable="true"  title="'+newRow["name"]+'" src="'+FOLDER_IMAGES+'/'+(newRow["category_name"])+'/'+  (newRow['file'])+'" id="img_'+newRow['pictogram_id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
+                        var innerHtmlBody='<img onclick="copyPictogram('+newRow['pictogram_id']+',1)"  title="'+newRow["name"]+'" src="'+FOLDER_IMAGES+'/'+(newRow["category_name"])+'/'+  (newRow['file'])+'" id="img_'+newRow['pictogram_id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
                         divContainerImage.innerHTML=innerHtmlBody;
                         divContainer.appendChild(divContainerImage);
                     }else{
                          var divContainerPhrase = document.createElement("div");
-                        divContainerPhrase.setAttribute("id","phrase_"+newRow["id"]);
+                        divContainerPhrase.setAttribute("id","phrase_"+newRow["id"]+"x"+flag);
                         divContainerPhrase.setAttribute("style","float:left; width:10.0%;");
                         divContainerPhrase.setAttribute("draggable","true");
-                        var innerHtmlBodyPhrase='<b/><label id="label_phrase_'+indexId+'"  ondragstart="drag(event)" draggable="true">'+newRow["phrase"]+'</label></b>';
+                        var innerHtmlBodyPhrase='<b/><label id="label_phrase_'+newRow["id"]+'x'+flag+'"  onclick="copyPictogram('+"'"+'label_phrase_'+newRow["id"]+'x'+flag+''+"'"+',2)">'+newRow["phrase"]+'</label></b>';
                         divContainerPhrase.innerHTML=innerHtmlBodyPhrase;
                         indexId=indexId+1;
                         divContainer.appendChild(divContainerPhrase);
                     }
-                    document.close();            
+                    document.close();
+                    flag=flag+1;            
                 }
             }
 
@@ -186,30 +193,38 @@ writePictogramList(tx,results);
         
 
             function writePreferenceInResult(tx, newResults){
+                var flag=1;
               for (var i=0; i< newResults.rows.length; i++) {
                     var newRow=newResults.rows.item(i);
-                var divContainer = document.getElementById("pictogramResult");                  
+                var divContainer = document.getElementById("pictogramResult");  
+                 var DIV_ID=null;                
                     if (newRow["pictogram_id"]!=null){
                         var divContainerImage = document.createElement("div");
-                        divContainerImage.setAttribute("id", "pictogram_"+newRow["pictogram_id"])
+                        DIV_ID="result_img_"+newRow["pictogram_id"];
+                        divContainerImage.setAttribute("id", DIV_ID);
                         divContainerImage.setAttribute("style","float:left; width:10.0%;");
                         divContainerImage.setAttribute("draggable","true");
                         var innerHtmlBody='<b>'+newRow["phrase"]+'</b>';
                         var innerHtmlBody='<img ondragstart="drag(event)" draggable="true"  title="'+newRow["name"]+'" src="'+FOLDER_IMAGES+'/'+(newRow["category_name"])+'/'+  (newRow['file'])+'" id="img_'+newRow['pictogram_id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
+                        innerHtmlBody+='<br/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+DIV_ID+"'"+')"><i class="fa fa-trash-o"></i></a>';
+                        innerHtmlBody+='<label id="lbl_img_'+newRow["pictogram_id"]+'" >'+newRow["phrase"]+'</label></b>';
                         divContainerImage.innerHTML=innerHtmlBody;
                         divContainer.appendChild(divContainerImage);
                     }else{
  var divContainerPhrase = document.createElement("div");
-            divContainerPhrase.setAttribute("id","phrase_"+newRow["id"]);
+ DIV_ID="phrase_"+newRow["id"]+"y"+flag;
+            divContainerPhrase.setAttribute("id",DIV_ID);
             divContainerPhrase.setAttribute("style","float:left; width:10.0%;");
             divContainerPhrase.setAttribute("draggable","true");
-            var innerHtmlBodyPhrase='<b/><label id="label_phrase_'+indexId+'"  ondragstart="drag(event)" draggable="true">'+newRow["phrase"]+'</label></b>';
+            var innerHtmlBodyPhrase='<br/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+DIV_ID+"'"+')"><i class="fa fa-trash-o"></i></a>';
+            innerHtmlBodyPhrase+='<label id="label_phrase_'+newRow["id"]+'y'+flag+'"  ondragstart="drag(event)" draggable="true">'+newRow["phrase"]+'</label></b>';
             divContainerPhrase.innerHTML=innerHtmlBodyPhrase;
             indexId=indexId+1;
             divContainer.appendChild(divContainerPhrase);
 
                     }
                     document.close();            
+                    flag=flag+1;
                 }
         }  
         
@@ -237,3 +252,11 @@ writeParameters(tx,results);
             tx.executeSql("UPDATE SYSTEM_PARAMETERS set value_parameter=? WHERE code_parameter=?", [value,code]);
         },dbObject.errorDataBase);       
     }
+
+     function unlinkPreferences(dbObject,preferenceId){
+            dbObject.db.transaction(function(tx) {
+            tx.executeSql("delete from PICTOGRAM_PREFERENCES_LINE WHERE preference_id=?", [preferenceId]);
+            tx.executeSql("delete from PICTOGRAM_PREFERENCES WHERE id=?", [preferenceId]);
+        },dbObject.errorDataBase);
+
+          }

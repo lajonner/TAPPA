@@ -70,6 +70,20 @@
            document.close();
            cancelPreference();
           }
+          function copyPictogram(id,typeDiv){
+              var divPictograms = document.getElementById("pictogramResult");       
+             if(typeDiv==1){
+                  divPictograms.appendChild(loadImagePictogram("img_"+id));
+                }
+                else{  
+                   divPictograms.appendChild(copyPhrase(id));
+                }
+
+          }
+          function dropDivById(divId){
+            var el = document.getElementById(divId);
+el.parentNode.removeChild(el);
+          }
           function addPhrase(){
            var txtPictogram = document.getElementById("txtSearch").value;
            if (txtPictogram.length<=0){
@@ -82,10 +96,11 @@
            }
         var divPictograms = document.getElementById("pictogramResult");       
         var divContainer = document.createElement("div");
-            divContainer.setAttribute("id","phrase_"+indexId);
+        var divID="phrase_x"+indexId;
+            divContainer.setAttribute("id",divID);
             divContainer.setAttribute("style","float:left; width:10.0%;");
             divContainer.setAttribute("draggable","true");
-            var innerHtmlBody='<b/><label id="label_phrase_'+indexId+'"  ondragstart="drag(event)" draggable="true">'+txtPictogram+'</label></b>';
+            var innerHtmlBody='<a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+divID+"'"+')"><i class="fa fa-trash-o"></i></a><b/><label id="label_phrase_x'+indexId+'"  ondragstart="drag(event)" draggable="true">'+txtPictogram+'</label></b>';
             divContainer.innerHTML=innerHtmlBody;
             divPictograms.appendChild(divContainer);
             indexId=indexId+1;
@@ -106,7 +121,7 @@
             var sequence=1;
             for(var x=0;x<bodyPictogram.childNodes.length;x++) {
                 var divx = bodyPictogram.children[x];
-                var eachValues=[null,null,0];
+                var eachValues=[null,"",0];
 if(divx!=null){
                 if(divx.tagName=="DIV"){
                   if(divx.id.startsWith("result_img")){
@@ -114,12 +129,19 @@ if(divx!=null){
                       var divxid_part=(divx.id).split("result_img_");      
                       var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);
                       eachValues[0]=divxid_part[1];
-                       eachValues[1]=lblImg.innerHTML;
+                       eachValues[1]=eachValues[1]+lblImg.innerHTML;
                   }else{
-                      var divPhraseResult = document.getElementById(divx.id);
-                      var divxid_part=(divx.id).split("phrase_");
-                      var bPhrase = document.getElementById("label_phrase_"+divxid_part[1]);
-                     eachValues[1]=bPhrase.innerHTML;
+
+                    var divPhraseResult = document.getElementById(divx.id);
+                      if (divPhraseResult.id.startsWith("phrase_")){
+                          var bPhrase = document.getElementById("label_"+divPhraseResult.id);
+                          eachValues[1]=eachValues[1]+" "+bPhrase.innerHTML;
+                      }else{
+                        var divxid_part=(divx.id).split("label");   
+                        var lblImg = document.getElementById("label_"+divxid_part[1]);
+                        eachValues[1]=eachValues[1]+" "+lblImg.innerHTML;
+                      }
+
                   }
                   eachValues[2]=sequence
                   listValues.push(eachValues);
@@ -132,6 +154,7 @@ if(divx!=null){
             savePreferencesRecord(dbObject,listValues,code,name)
             cancelPreference();
             clearResult();
+            searchLoadPictogramLimit();
             return true;
           }
           function isValidateFields(){
@@ -176,18 +199,24 @@ if(divx!=null){
           if (bodyPictogram.childNodes.length>0){
             for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
                 var divx = bodyPictogram.children[x];
+                if (divx!=null){
                 if(divx.tagName=="DIV"){
-                  if(divx.id.startsWith("result_img")){
-                      var divPictogramResult = document.getElementById(divx.id);
+                  if(divx.id.startsWith("result_img_")){
                       var divxid_part=(divx.id).split("result_img_");      
                       var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);
                       allPhrase+=" "+lblImg.innerHTML;
                   }else{
                       var divPhraseResult = document.getElementById(divx.id);
-                      var divxid_part=(divx.id).split("phrase_");
-                      var bPhrase = document.getElementById("label_phrase_"+divxid_part[1]);
-                      allPhrase+=" "+bPhrase.innerHTML;
+                      if (divPhraseResult.id.startsWith("phrase_")){
+                          var bPhrase = document.getElementById("label_"+divPhraseResult.id);
+                          allPhrase+=" "+bPhrase.innerHTML;                          
+                      }else{
+                        var divxid_part=(divx.id).split("label");  
+                        var lblImg = document.getElementById("label_"+divxid_part[1]);
+                        allPhrase+=" "+lblImg.innerHTML;
+                      }
                   }
+                }
                 }
               }
             }
@@ -203,6 +232,11 @@ if(divx!=null){
              var txtCode = document.getElementById("fld_code");   
              txtName.value=null;
               txtCode.value=null;
+          }
+          function deletePreference(preferenceId){
+            unlinkPreferences(dbObject,preferenceId);
+            alert("Preferencia eliminada con éxito");
+            searchLoadPictogramLimit();
           }
            function showAbout() {
             alert('TAPPA\nTecnología Aplicada para personas con problemas Auditivos\nAutores:\nLajonner Alfonso Crespín Moran\nMónica Elizabeth Chavez Estrada');
@@ -306,11 +340,13 @@ return true;
                                         <option data-value="preference">Preferencias</option>                              
                                 </select style="width:13%">
                            </span>
-              <input type="text" name="q" class="form-control" placeholder="Busqueda..." id="txtSearch">
+                            <span class="input-group-btn" style="width:69%">
+              <input type="text" name="q" class="form-control" placeholder="Busqueda..." id="txtSearch" style="width:80%">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat" onclick="searchLoadPictogramLimit()"><i class="fa fa-search"></i></button>
               </span>
-               <span class="input-group-btn" style="width:8%">
+               </span>
+               <span class="input-group-btn" style="width:10%">
              <input type="number" name="quantity" min="1"  id="limitRecords" class="form-control" onkeypress="searchLoadPictogramLimit()" onclick="searchLoadPictogramLimit()">
               </span>
             </div>   
