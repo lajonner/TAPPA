@@ -41,10 +41,10 @@
         }        
         if (name!=null){
             if (name.trim().length>0){
-                where+=" and p.name like '"+name+"%' or p.name like '%"+name+"%' ";
+                where+=" and (p.name like '"+name+"%' or p.name like '%"+name+"%') ";
             }
         }
-        dbObject.db.transaction(function(tx) {
+         dbObject.db.transaction(function(tx) {
             tx.executeSql('SELECT p.id as id,p.name as name,p.file as file,pc.name as category_name from pictogram p inner join pictogram_category pc on pc.id=p.category_id where p.id<>0 '+where+' order by pc.name,p.name asc LIMIT '+getLimitRecords()+'', [], writePictogramList);
         },dbObject.errorDataBase);  
     }
