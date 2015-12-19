@@ -196,11 +196,13 @@ if(divx!=null){
           clearPreferenceForm();   
           var bodyPictogram = document.getElementById("pictogramResult");          
           var allPhrase="";
+          alert(bodyPictogram.childNodes.length);
           if (bodyPictogram.childNodes.length>0){
-            for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
+              for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
                 var divx = bodyPictogram.children[x];
                 if (divx!=null){
-                if(divx.tagName=="DIV"){
+                  alert(divx.tagName); 
+                if(divx.tagName=="DIV" or divx.tagName=="div"){
                   if(divx.id.startsWith("result_img_")){
                       var divxid_part=(divx.id).split("result_img_");      
                       var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);
