@@ -200,8 +200,8 @@ if(divx!=null){
         for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
                 var divx = bodyPictogram.children[x];
                 if (divx!=null){
-                  alert(divx.tagName);
                 if(divx.tagName=="DIV"){
+                 alert(divx.id); 
                   if(divx.id.startsWith("result_img_")){
                       var divxid_part=(divx.id).split("result_img_");      
                       var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);
