@@ -201,10 +201,11 @@ if(divx!=null){
   for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
                 var divx = bodyPictogram.children[x];
                 if (divx!=null){
-                if(divx.tagName=="DIV" || divx.tagName=="div"){
+                if(divx.tagName=="DIV"){
+                  alert(divx.id);
+                  alert(divx.id.startsWith("result_img_"));
                   if(divx.id.startsWith("result_img_")){
                       var divxid_part=(divx.id).split("result_img_");   
-alert(divxid_part[1]);
                       var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);  
                       allPhrase+=" "+lblImg.innerHTML;
                   }else{
