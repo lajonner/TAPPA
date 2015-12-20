@@ -202,10 +202,10 @@ if(divx!=null){
                 var divx = bodyPictogram.children[x];
                 if (divx!=null){
                 if(divx.tagName=="DIV" || divx.tagName=="div"){
-alert(divx.id);
                   if(divx.id.startsWith("result_img_")){
-                      var divxid_part=(divx.id).split("result_img_");      
-                      var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);
+                      var divxid_part=(divx.id).split("result_img_");   
+alert(divxid_part[1]);
+                      var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);  
                       allPhrase+=" "+lblImg.innerHTML;
                   }else{
                       var divPhraseResult = document.getElementById(divx.id);
@@ -214,8 +214,8 @@ alert(divx.id);
                           allPhrase+=" "+bPhrase.innerHTML;                          
                       }else{
                         var divxid_part=(divx.id).split("label");  
-                        var lblImg = document.getElementById("label_"+divxid_part[1]);
-                        allPhrase+=" "+lblImg.innerHTML;
+                        var lblImg2 = document.getElementById("label_"+divxid_part[1]);
+                        allPhrase+=" "+lblImg2.innerHTML;
                       }
                   }
                 }
