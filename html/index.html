@@ -200,6 +200,7 @@ if(divx!=null){
         for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
                 var divx = bodyPictogram.children[x];
                 if (divx!=null){
+                  alert(divx.tagName);
                 if(divx.tagName=="DIV"){
                   if(divx.id.startsWith("result_img_")){
                       var divxid_part=(divx.id).split("result_img_");      
@@ -216,7 +217,6 @@ if(divx!=null){
                         allPhrase+=" "+lblImg.innerHTML;
                       }
                   }
-                  alert(allPhrase);
                 }
                 }
               }
