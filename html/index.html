@@ -197,11 +197,13 @@ if(divx!=null){
           var bodyPictogram = document.getElementById("pictogramResult");          
           var allPhrase="";
           if (bodyPictogram.childNodes.length>0){
-        for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
+
+            try {
+  for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
                 var divx = bodyPictogram.children[x];
                 if (divx!=null){
                 if(divx.tagName=="DIV"){
-                 alert(divx.id); 
+
                   if(divx.id.startsWith("result_img_")){
                       var divxid_part=(divx.id).split("result_img_");      
                       var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);
@@ -220,6 +222,13 @@ if(divx!=null){
                 }
                 }
               }
+}
+catch(err) {
+    alert(err.message);
+}
+
+
+      
             }
             var txtName = document.getElementById("fld_name");    
               txtName.value=allPhrase;
