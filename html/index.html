@@ -124,9 +124,8 @@ el.parentNode.removeChild(el);
                 var divx = bodyPictogram.children[x];
                 var eachValues=[null,"",0];
 if(divx!=null){
-  alert(divx.id);
                 if(divx.tagName=="DIV"){
-                  /*if(divx.id.startsWith("result_img")){
+                  if(divx.id.startsWith("result_img")){
                       var divPictogramResult = document.getElementById(divx.id);
                       var divxid_part=(divx.id).split("result_img_");      
                       var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);
@@ -146,7 +145,7 @@ if(divx!=null){
 
                   }
                   eachValues[2]=sequence
-                  listValues.push(eachValues);*/
+                  listValues.push(eachValues);
                 }
                 sequence=sequence+1;
               }
@@ -202,7 +201,8 @@ if(divx!=null){
 
   for(var x=0;x<bodyPictogram.childNodes.length-1;x++) {
                 var divx = bodyPictogram.children[x];
-                if (divx!=null){
+                alert(divx.id);
+/*                if (divx!=null){
                 if(divx.tagName=="DIV"){
                    if(divx.id.startsWith("result_img_")){
                       var divxid_part=(divx.id).split("result_img_");   
@@ -220,7 +220,7 @@ if(divx!=null){
                       }
                   }
                 }
-                }
+                }*/
               }
 
 
