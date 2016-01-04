@@ -205,7 +205,7 @@ try{
                 var divx = bodyPictogram.children[x];
                 if (divx!=null){
                 if(divx.tagName=="DIV"){ 
-                  alert(divx.id);               
+                  alert((divx.id));               
                    if(divx.id.startsWith("result_img_")){
                       var divxid_part=(divx.id).split("result_img_");   
                       var lblImg = document.getElementById("lbl_img_"+divxid_part[1]);  
