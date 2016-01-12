@@ -16,9 +16,61 @@
   * Mónica Elizabeth Chavez Estrada
 </author>
 
+<gap:plugin name="org.apache.cordova.battery-status" />
+<gap:plugin name="org.apache.cordova.camera" />
+<gap:plugin name="org.apache.cordova.media-capture" />
+<gap:plugin name="org.apache.cordova.console" />
+<gap:plugin name="org.apache.cordova.contacts" />
+<gap:plugin name="org.apache.cordova.device" />
+<gap:plugin name="org.apache.cordova.device-motion" />
+<gap:plugin name="org.apache.cordova.device-orientation" />
+<gap:plugin name="org.apache.cordova.dialogs" />
 <gap:plugin name="org.apache.cordova.file" />
-<gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
+<gap:plugin name="org.apache.cordova.file-transfer" />
+<gap:plugin name="org.apache.cordova.geolocation" />
+<gap:plugin name="org.apache.cordova.globalization" />
+<gap:plugin name="org.apache.cordova.inappbrowser" />
+<gap:plugin name="org.apache.cordova.media" />
+<gap:plugin name="org.apache.cordova.network-information" />
+<gap:plugin name="org.apache.cordova.splashscreen" />
+<gap:plugin name="org.apache.cordova.vibration" />
+
+<gap:plugin name="com.phonegap.plugins.pushplugin" />
+<gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
+
+<gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:qualifier="port-ldpi" />
+<gap:splash src="res/screen/android/screen-mdpi-portrait.png"       gap:platform="android" gap:qualifier="port-mdpi" />
+<gap:splash src="res/screen/android/screen-hdpi-portrait.png"       gap:platform="android" gap:qualifier="port-hdpi" />
+<gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:qualifier="port-xhdpi" />
+<gap:splash src="res/screen/blackberry/screen-225.png"              gap:platform="blackberry" />
+<gap:splash src="res/screen/ios/screen-iphone-portrait.png"         gap:platform="ios"     width="320" height="480" />
+<gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png"      gap:platform="ios"     width="640" height="960" />
+<gap:splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" gap:platform="ios"     width="640" height="1136" />
+<gap:splash src="res/screen/ios/screen-ipad-portrait.png"           gap:platform="ios"     width="768" height="1024" />
+<gap:splash src="res/screen/ios/screen-ipad-landscape.png"          gap:platform="ios"     width="1024" height="768" />
+<gap:splash src="res/screen/windows-phone/screen-portrait.jpg"      gap:platform="winphone" />
+
+
+<icon src="images/icon.png" width="72" height="72" />
+<icon src="images/icon.png" width="48" height="48" />
+<icon src="images/icon.png" width="36" height="36" />
+
 <access origin="*"/>
 
-<icon src="images/icon.png" />
+
+<allow-intent href="http://*/*" />
+<allow-intent href="https://*/*" />
+<allow-intent href="tel:*" />
+<allow-intent href="sms:*" />
+<allow-intent href="mailto:*" />
+<allow-intent href="geo:*" />
+<platform name="android">
+<allow-intent href="market:*" />
+</platform>
+<platform name="ios">
+<allow-intent href="itms:*" />
+<allow-intent href="itms-apps:*" />
+</platform>
+
+
 </widget>
