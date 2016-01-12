@@ -17,7 +17,7 @@
 </author>
 
 <gap:plugin name="org.apache.cordova.file" />
-
+<gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
 <access origin="*"/>
 
 <icon src="images/icon.png" />
