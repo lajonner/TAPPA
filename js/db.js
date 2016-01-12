@@ -1,4 +1,4 @@
-var DATABASE_NAME="TAPPA_BASE"
+var DATABASE_NAME="TAPPA_BASE_FINAL"
 var DATABASE_VERSION="1.0"
 var DATABASE_DESCRIPTION="BASE TAPPA"
 var DATABASE_SIZE=200000
@@ -113,7 +113,7 @@ DB.prototype.unlink=function(model,id) {
 /***INICIALIZACION DE DB CONEXION ABSTRACTA A LA BASE DE DATOS***/
     var dbObject=new DB(DATABASE_NAME,DATABASE_VERSION,DATABASE_DESCRIPTION,DATABASE_SIZE);
     dbObject.registerObjectDB("PICTOGRAM_CATEGORY",{"name":"text not null unique",
-        "description":"text"});
+        "description":"text","folder":"text"});
     dbObject.registerObjectDB("PICTOGRAM",{"name":"text not null",
         "file":" text not null",
         "category_id":"integer default 0 references PICTOGRAM_CATEGORY on delete set default"});
@@ -188,7 +188,9 @@ if (results.rows.length>0) {
         if (row["counter"]<=0){
             var datas=[['ABECEDARIO'],['ACCESORIOS ROPA'],['ACCIONES'],['ADJETIVOS'],['ANIMALES'],['ASEO PERSONAL'],['ASTRONOMIA'],['BEBIDAS'],['BOTIQUÍN MEDICO'],['COCINA'],['COLORES'],['COMIDA'],['CUENTOS INFANTILES'],['DEPORTES'],['DIAS SEMANA'],['DINERO'],['ENFERMEDADES'],['FESTIVIDADES'],['FRASES'],['GEOGRAFIA'],['HORAS RELOJ'],['IMPLEMENTOS DEPORTIVOS'],['JUEGOS Y JUGUETES'],['LUGARES'],['MESES AÑO'],['MUSICA'],['NUMEROS'],['PAISES'],['PARTES CUERPO'],['PERSONAS'],['PLANTAS'],['PROFESIONES'],['PUNTOS CARDINALES'],['RELIGION'],['ROPA'],['SALUD'],['SEXUALIDAD'],['SIMBOLOS'],['TIEMPO'],['TRANSITO Y PARTES AUTO'],['TRANSPORTE'],['Z OBJETOS']];
             for (each_value in datas){
-             tx.executeSql("INSERT INTO PICTOGRAM_CATEGORY(name)values(?)",datas[each_value]);       
+			var name=datas[each_value][0];
+			 var valueInsert=[name,name];
+             tx.executeSql("INSERT INTO PICTOGRAM_CATEGORY(name,folder)values(?,?)",valueInsert);       
          }
          }
        }

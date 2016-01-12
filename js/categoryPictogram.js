@@ -33,15 +33,19 @@ function writeCategoryList(tx, results){
   
   function loadCategoryPictogramForm(dbObject,id) {
         dbObject.db.transaction(function(tx) {
-             tx.executeSql('SELECT id,name from PICTOGRAM_CATEGORY where id=? order by name asc', [id,], writeCategoryPictogramForm);        
+             tx.executeSql('SELECT id,name,folder,description from PICTOGRAM_CATEGORY where id=? order by name asc', [id,], writeCategoryPictogramForm);        
        });  
     }
     
     function writeCategoryPictogramForm(tx, results) {
         var fld_name = document.getElementById("fld_name");
+        var fld_folder = document.getElementById("fld_folder");
+        var fld_description = document.getElementById("fld_description");
         for (i=0; i< results.rows.length; i++) {
             row=results.rows.item(i);
             fld_name.value=row["name"];
+            fld_folder.value=row["folder"];
+            fld_description.value=row["description"];
             document.close();
         }  
     }     

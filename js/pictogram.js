@@ -14,10 +14,19 @@
             }
         }
         dbObject.db.transaction(function(tx) {
-            tx.executeSql('SELECT p.id as id,p.name as name,p.file as file,pc.name as category_name from pictogram p inner join pictogram_category pc on pc.id=p.category_id where pc.id>0 '+where+' order by pc.name,p.name asc LIMIT '+getLimitRecords()+'', [], writePictogramList);
+            tx.executeSql('SELECT p.id as id,p.name as name,p.file as file,pc.name as category_name,pc.folder as folder from pictogram p inner join pictogram_category pc on pc.id=p.category_id where pc.id>0 '+where+' order by pc.name,p.name asc LIMIT '+getLimitRecords()+'', [], writePictogramList);
         },dbObject.errorDataBase);        
     }
 
+    function getPictogramPath(row){
+        var categoryFolder="";
+        if(row["folder"]!=null){
+            if (row["folder"].trim().length>0){
+                categoryFolder=(row["folder"])+'/';
+            }
+        }  
+        return FOLDER_IMAGES+'/'+categoryFolder+row['file'];
+    } 
 
     function writePictogramList(tx, results){
         var divPictograms = document.getElementById("pictogramList");
@@ -28,7 +37,7 @@
             divContainer.setAttribute("id", "pictogram_"+row["id"])
             divContainer.setAttribute("style","float:left; width:25.0%;");
              divContainer.setAttribute("class", "btn btn-default");            
-            var innerHtmlBody='<a href="#"" class="btn btn-xs" onclick="deleteRecord('+row["id"]+')"><i class="fa fa-trash-o"></i></a><a align="justify" href="#" onclick="editRecord('+row["id"]+')">'+row["name"]+'</a><br/><img title="'+row["name"]+'" src="'+FOLDER_IMAGES+'/'+row["category_name"]+'/'+row['file']+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
+            var innerHtmlBody='<a href="#"" class="btn btn-xs" onclick="deleteRecord('+row["id"]+')"><i class="fa fa-trash-o"></i></a><a align="justify" href="#" onclick="editRecord('+row["id"]+')">'+row["name"]+'</a><br/><img title="'+row["name"]+'" src="'+getPictogramPath(row)+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
             divContainer.innerHTML=innerHtmlBody;
             divPictograms.appendChild(divContainer);
             document.close();
@@ -38,7 +47,7 @@
 
     function loadPictogramForm(dbObject,id) {
         dbObject.db.transaction(function(tx) {
-             tx.executeSql('SELECT p.id as id,p.name as name,p.file as file,pc.name as category_name,pc.id from pictogram p inner join pictogram_category pc on pc.id=p.category_id where p.id=? order by pc.name,p.name asc', [id,], writePictogramForm);        
+             tx.executeSql('SELECT p.id as id,p.name as name,p.file as file,pc.name as category_name,pc.folder as folder,pc.id from pictogram p inner join pictogram_category pc on pc.id=p.category_id where p.id=? order by pc.name,p.name asc', [id,], writePictogramForm);        
        },dbObject.errorDataBase);  
     }
     
@@ -53,7 +62,7 @@
             fld_categ.value=row["category_name"];
             $(".option_"+row["category_id"]+" select").val(row["category_name"]);
             fld_file.name=row["file"];
-            result_img_file.setAttribute("src",FOLDER_IMAGES+"/"+row["category_name"]+"/"+row['file']+"");
+            result_img_file.setAttribute("src",getPictogramPath(row));
             result_img_file.setAttribute("title",row["name"]);
             document.close();
         }}

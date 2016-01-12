@@ -13,7 +13,7 @@
     }
 
     function getCategoryPictogramList(tx){
-        tx.executeSql('SELECT id,name from PICTOGRAM_CATEGORY order by name asc', [], writeCategoryPictogramList);
+        tx.executeSql('SELECT id,name,folder from PICTOGRAM_CATEGORY order by name asc', [], writeCategoryPictogramList);
     }
     
     function writeCategoryPictogramList(tx, results) {
@@ -45,7 +45,7 @@
             }
         }
          dbObject.db.transaction(function(tx) {
-            tx.executeSql('SELECT p.id as id,p.name as name,p.file as file,pc.name as category_name from pictogram p inner join pictogram_category pc on pc.id=p.category_id where p.id<>0 '+where+' order by pc.name,p.name asc LIMIT '+getLimitRecords()+'', [], writePictogramList);
+            tx.executeSql('SELECT p.id as id,p.name as name,p.file as file,pc.name as category_name,pc.folder as folder from pictogram p inner join pictogram_category pc on pc.id=p.category_id where p.id<>0 '+where+' order by pc.name,p.name asc LIMIT '+getLimitRecords()+'', [], writePictogramList);
         },dbObject.errorDataBase);  
     }
 
@@ -57,7 +57,7 @@
             }
         }
         dbObject.db.transaction(function(tx) {
-            tx.executeSql('SELECT p.id as id,p.name as name,p.file as file,pc.name as category_name from pictogram p inner join pictogram_category pc on pc.id=p.category_id where p.id<>0 '+where+' order by pc.name,p.name asc LIMIT '+getLimitRecords()+'', [], function(tx,results){
+            tx.executeSql('SELECT p.id as id,p.name as name,p.file as file,pc.name as category_name,pc.folder as folder from pictogram p inner join pictogram_category pc on pc.id=p.category_id where p.id<>0 '+where+' order by pc.name,p.name asc LIMIT '+getLimitRecords()+'', [], function(tx,results){
 writePictogramList(tx,results);
             });
         },dbObject.errorDataBase);       
@@ -73,13 +73,23 @@ writePictogramList(tx,results);
             divContainer.setAttribute("style","float:left; width:10.0%;");
             divContainer.setAttribute("draggable","true");
             //ondragstart="drag(event)" draggable="true" 
-            var innerHtmlBody='<img  onclick="copyPictogram('+row['id']+',1)" title="'+row["name"]+'" src="'+FOLDER_IMAGES+'/'+(row["category_name"])+'/'+  (row['file'])+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
+            var innerHtmlBody='<img  onclick="copyPictogram('+row['id']+',1)" title="'+row["name"]+'" src="'+getPictogramPath(row)+'" id="img_'+row['id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
             divContainer.innerHTML=innerHtmlBody;
             divPictograms.appendChild(divContainer);
             document.close();
         }  
     } 
-
+	
+	function getPictogramPath(row){
+		var categoryFolder="";
+		if(row["folder"]!=null){
+			if (row["folder"].trim().length>0){
+				categoryFolder=(row["folder"])+'/';
+			}
+		}  
+		return FOLDER_IMAGES+'/'+categoryFolder+row['file'];
+	} 
+	
      function loadImagePictogram(imageId) {
         var imageContainer = document.getElementById(imageId);
         var divContainer = document.createElement("div");
@@ -148,7 +158,7 @@ writePictogramList(tx,results);
             divLabel.setAttribute("style","float:left; width:25.0%;")
             divLabel.innerHTML="<a href='#' class='btn btn-xs' onclick='deletePreference("+row["id"]+")'><i class='fa fa-trash-o'></i></a><a href='#' onclick='copyPreference(dbObject,"+row["id"]+")'>"+row["code"]+"</a><br/><label>"+row["name"]+"</label>";
             divContainer.appendChild(divLabel);                 
-            tx.executeSql('SELECT ppl.id,ppl.phrase,p.id as pictogram_id,p.name as name,p.file as file,pc.name as category_name,ppl.preference_id from pictogram_preferences_line ppl left join pictogram p on p.id=ppl.pictogram_id left join pictogram_category pc on pc.id=p.category_id where ppl.preference_id='+preferenceId+' order by ppl.sequence asc', [],writePreferencesPictogramList 
+            tx.executeSql('SELECT ppl.id,ppl.phrase,p.id as pictogram_id,p.name as name,p.file as file,pc.name as category_name,pc.folder as folder,ppl.preference_id from pictogram_preferences_line ppl left join pictogram p on p.id=ppl.pictogram_id left join pictogram_category pc on pc.id=p.category_id where ppl.preference_id='+preferenceId+' order by ppl.sequence asc', [],writePreferencesPictogramList 
         ,dbObject.errorDataBase);  
             document.close();
             divPictograms.appendChild(divContainer);
@@ -166,7 +176,7 @@ writePictogramList(tx,results);
                         divContainerImage.setAttribute("style","float:left; width:10.0%;");
                         divContainerImage.setAttribute("draggable","true");
                         var innerHtmlBody='<b>'+newRow["phrase"]+'</b>';
-                        var innerHtmlBody='<img onclick="copyPictogram('+newRow['pictogram_id']+',1)"  title="'+newRow["name"]+'" src="'+FOLDER_IMAGES+'/'+(newRow["category_name"])+'/'+  (newRow['file'])+'" id="img_'+newRow['pictogram_id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
+                        var innerHtmlBody='<img onclick="copyPictogram('+newRow['pictogram_id']+',1)"  title="'+newRow["name"]+'" src="'+getPictogramPath(newRow)+'" id="img_'+newRow['pictogram_id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
                         divContainerImage.innerHTML=innerHtmlBody;
                         divContainer.appendChild(divContainerImage);
                     }else{
@@ -186,7 +196,7 @@ writePictogramList(tx,results);
 
             function copyPreference(dbObject,id){            
             dbObject.db.transaction(function(tx) {
-        tx.executeSql('SELECT ppl.id,ppl.phrase,p.id as pictogram_id,p.name as name,p.file as file,pc.name as category_name,ppl.preference_id from pictogram_preferences_line ppl left join pictogram p on p.id=ppl.pictogram_id left join pictogram_category pc on pc.id=p.category_id where ppl.preference_id='+id+' order by ppl.sequence asc', [],writePreferenceInResult 
+        tx.executeSql('SELECT ppl.id,ppl.phrase,p.id as pictogram_id,p.name as name,p.file as file,pc.name as category_name,pc.folder as folder,ppl.preference_id from pictogram_preferences_line ppl left join pictogram p on p.id=ppl.pictogram_id left join pictogram_category pc on pc.id=p.category_id where ppl.preference_id='+id+' order by ppl.sequence asc', [],writePreferenceInResult 
         ,dbObject.errorDataBase);  
             });
         }
@@ -205,7 +215,7 @@ writePictogramList(tx,results);
                         divContainerImage.setAttribute("style","float:left; width:10.0%;");
                         divContainerImage.setAttribute("draggable","true");
                         var innerHtmlBody='<b>'+newRow["phrase"]+'</b>';
-                        var innerHtmlBody='<img ondragstart="drag(event)" draggable="true"  title="'+newRow["name"]+'" src="'+FOLDER_IMAGES+'/'+(newRow["category_name"])+'/'+  (newRow['file'])+'" id="img_'+newRow['pictogram_id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
+                        var innerHtmlBody='<img ondragstart="drag(event)" draggable="true"  title="'+newRow["name"]+'" src="'+getPictogramPath(newRow)+'" id="img_'+newRow['pictogram_id']+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
                         innerHtmlBody+='<br/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+DIV_ID+"'"+')"><i class="fa fa-trash-o"></i></a>';
                         innerHtmlBody+='<label id="lbl_img_'+newRow["pictogram_id"]+'" >'+newRow["phrase"]+'</label></b>';
                         divContainerImage.innerHTML=innerHtmlBody;
@@ -226,6 +236,10 @@ writePictogramList(tx,results);
                     document.close();            
                     flag=flag+1;
                 }
+                
+                
+                
+                
         }  
         
         function loadParameters(dbObject){

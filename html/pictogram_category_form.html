@@ -51,16 +51,20 @@
               case "1":
                 if (isValidateFields()){
                   var name = document.getElementById("fld_name").value;
-                  insertDB("PICTOGRAM_CATEGORY",{"name":name});
+                  var folder = document.getElementById("fld_folder").value;
+                  var description = document.getElementById("fld_description").value;
+                  insertDB("PICTOGRAM_CATEGORY",{"name":name,"description":description,"folder":folder});
                   alert("Registro creado con éxito");
                   exitActivity();
                 }
               break;
              case "2":
               if (isValidateFields()){
-                 var name = document.getElementById("fld_name").value;
+                var name = document.getElementById("fld_name").value;
+                  var folder = document.getElementById("fld_folder").value;
+                  var description = document.getElementById("fld_description").value;
                 var id=Number(vars["id"]);
-                updateDB("PICTOGRAM_CATEGORY",id,{"name":name});
+                updateDB("PICTOGRAM_CATEGORY",id,{"name":name,"description":description,"folder":folder});
                 alert("Registro actualizado con éxito");
                 exitActivity();
               }
@@ -130,6 +134,14 @@
                                             <label>Nombre</label>
                                             <input class="form-control" id="fld_name">
                                             <p class="help-block">Nombre de Categoría</p>
+                                            
+                                             <label>Carpeta</label>
+                                            <input class="form-control" id="fld_folder">
+                                            <p class="help-block">Nombre de Carpeta</p>
+                                            
+                                             <label>Descripción</label>
+                                            <input class="form-control" id="fld_description">
+                                            <p class="help-block">Descripción de la categoría</p>
                                         </div>   
            </div><!-- /.row -->
         </section><!-- /.content -->
