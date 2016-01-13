@@ -37,7 +37,8 @@
 
 <gap:plugin name="com.phonegap.plugins.pushplugin" />
 <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
-
+<gap:plugin name="com.cesidiodibenedetto.filechooser" spec="1.0.0" source="pgb" />
+	
 <gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:qualifier="port-ldpi" />
 <gap:splash src="res/screen/android/screen-mdpi-portrait.png"       gap:platform="android" gap:qualifier="port-mdpi" />
 <gap:splash src="res/screen/android/screen-hdpi-portrait.png"       gap:platform="android" gap:qualifier="port-hdpi" />

@@ -218,6 +218,21 @@ fileName=fld_file.name;
     <script src="dist/js/demo.js"></script>
     
   <script type="text/javascript">
+	
+	var success = function(data) {
+        alert(data.filepath );
+    };
+
+    var error = function(msg) {
+        alert( msg );
+    };
+    
+    if( device.platform.toLowerCase() === 'android' && device.version.indexOf( '4.4' ) === 0 ) {
+        $('#fld_file').click( function(e) {
+            filechooser.open( {}, success, error );
+        });
+    }
+    
   function showImage(input){
             if(input.files && input.files[0]){
               var reader = new FileReader();
