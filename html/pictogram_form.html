@@ -184,6 +184,8 @@ fileName=fld_file.name;
                                         <div class="form-group">
                                             <label>Archivo</label>
                                       <input type="file" id="fld_file" value="alert.png" >
+
+                                      <button id="loadbutton" type="submit" onclick="test()">xxxx</button>
                                         </div>
                                           <div class="form-group"> <img src="#" id="result_img_file" alt="Tu imagen"  width="300" height="300"></div>
 
@@ -251,7 +253,25 @@ fileName=fld_file.name;
             loadPictogramForm(dbObject,Number(vars["id"]));
             break;
          } 
-		 
+
+function test(){
+getImage();
+}
+
+	
+   function getImage() {
+            // Retrieve image file location from specified source
+            navigator.camera.getPicture(uploadPhoto, function(message) {
+      alert('get picture failed');
+    },{
+      quality: 50, 
+      destinationType: navigator.camera.DestinationType.FILE_URI,
+      sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+    }
+            );
+ 
+        }
+
     </script>
 
 
