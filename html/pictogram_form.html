@@ -26,7 +26,7 @@
     <script src="../js/APP.js"></script>
     <script src="../js/pictogram.js"></script> 
         <script src="cordova.js"></script>
-          <script> 
+          <script>
           var fileName=null;
           var vars=getVars(document);
           function exitActivity(){
@@ -106,6 +106,10 @@ fileName=fld_file.name;
               break;               
             }          
           }
+          
+          
+    
+
           </script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
@@ -179,10 +183,14 @@ fileName=fld_file.name;
                                         
                                         <div class="form-group">
                                             <label>Archivo</label>
-                                            <input type="file" id="fld_file" value="alert.png">
+                                            
+                                                      <a href="#" id="xxx" onclick="openfiles()">Just click me.</a>
+
+
+                                            <input type="file" id="fld_file" value="alert.png" >
                                         </div>
                                           <div class="form-group"> <img src="#" id="result_img_file" alt="Tu imagen"  width="300" height="300"></div>
-                                       
+                                       <button type="button" onclick="getFile()">Obtener</button>
                                     </form>
 
            </div><!-- /.row -->
@@ -242,6 +250,12 @@ fileName=fld_file.name;
             loadPictogramForm(dbObject,Number(vars["id"]));
             break;
          }
+         
+         function openfiles(){
+          document.getElementById("fld_file").click();
+			 
+		 }
+		  $("#fld_file").hide(); 
     </script>
 
 
