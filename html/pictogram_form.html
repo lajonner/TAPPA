@@ -225,8 +225,7 @@ fileName=fld_file.name;
   <script type="text/javascript">    
   function showImage(input){
 	  try{
-		  alert(input);
-            if(input.files && input.files[0]){
+		    if(input.files && input.files[0]){
               var reader = new FileReader();
               reader.onload = function (e) {
                 $('#result_img_file').attr('src', e.target.result);
