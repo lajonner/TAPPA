@@ -184,13 +184,11 @@ fileName=fld_file.name;
                                         <div class="form-group">
                                             <label>Archivo</label>
                                             
-                                                      <a href="#" id="xxx" onclick="openfiles()">Just click me.</a>
 
 
                                             <input type="file" id="fld_file" value="alert.png" >
                                         </div>
                                           <div class="form-group"> <img src="#" id="result_img_file" alt="Tu imagen"  width="300" height="300"></div>
-                                       <button type="button" onclick="getFile()">Obtener</button>
                                     </form>
 
            </div><!-- /.row -->
@@ -249,13 +247,7 @@ fileName=fld_file.name;
             case "2":
             loadPictogramForm(dbObject,Number(vars["id"]));
             break;
-         }
-         
-         function openfiles(){
-         // document.getElementById("fld_file").click();
-			fileChooser.open(function(uri) {
-    alert(uri);
-}); 
+         } 
 		 }
     </script>
 
