@@ -252,10 +252,11 @@ fileName=fld_file.name;
          }
          
          function openfiles(){
-          document.getElementById("fld_file").click();
-			 
+         // document.getElementById("fld_file").click();
+			fileChooser.open(function(uri) {
+    alert(uri);
+}); 
 		 }
-		  $("#fld_file").hide(); 
     </script>
 
 
