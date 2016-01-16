@@ -1,4 +1,4 @@
-var DATABASE_NAME="TAPPA_BASE_FINAL"
+var DATABASE_NAME="DB_TAPPA_10"
 var DATABASE_VERSION="1.0"
 var DATABASE_DESCRIPTION="BASE TAPPA"
 var DATABASE_SIZE=200000
@@ -186,7 +186,7 @@ if (results.rows.length>0) {
        if (results.rows.length>0) {
         row=results.rows.item(0);
         if (row["counter"]<=0){
-            var datas=[['ABECEDARIO'],['ACCESORIOS ROPA'],['ACCIONES'],['ADJETIVOS'],['ANIMALES'],['ASEO PERSONAL'],['ASTRONOMIA'],['BEBIDAS'],['BOTIQUÍN MEDICO'],['COCINA'],['COLORES'],['COMIDA'],['CUENTOS INFANTILES'],['DEPORTES'],['DIAS SEMANA'],['DINERO'],['ENFERMEDADES'],['FESTIVIDADES'],['FRASES'],['GEOGRAFIA'],['HORAS RELOJ'],['IMPLEMENTOS DEPORTIVOS'],['JUEGOS Y JUGUETES'],['LUGARES'],['MESES AÑO'],['MUSICA'],['NUMEROS'],['PAISES'],['PARTES CUERPO'],['PERSONAS'],['PLANTAS'],['PROFESIONES'],['PUNTOS CARDINALES'],['RELIGION'],['ROPA'],['SALUD'],['SEXUALIDAD'],['SIMBOLOS'],['TIEMPO'],['TRANSITO Y PARTES AUTO'],['TRANSPORTE'],['Z OBJETOS']];
+            var datas=[['SEÑAS'],['ABECEDARIO'],['ACCESORIOS ROPA'],['ACCIONES'],['ADJETIVOS'],['ANIMALES'],['ASEO PERSONAL'],['ASTRONOMIA'],['BEBIDAS'],['BOTIQUÍN MEDICO'],['COCINA'],['COLORES'],['COMIDA'],['CUENTOS INFANTILES'],['DEPORTES'],['DIAS SEMANA'],['DINERO'],['ENFERMEDADES'],['FESTIVIDADES'],['FRASES'],['GEOGRAFIA'],['HORAS RELOJ'],['IMPLEMENTOS DEPORTIVOS'],['JUEGOS Y JUGUETES'],['LUGARES'],['MESES AÑO'],['MUSICA'],['NUMEROS'],['PAISES'],['PARTES CUERPO'],['PERSONAS'],['PLANTAS'],['PROFESIONES'],['PUNTOS CARDINALES'],['RELIGION'],['ROPA'],['SALUD'],['SEXUALIDAD'],['SIMBOLOS'],['TIEMPO'],['TRANSITO Y PARTES AUTO'],['TRANSPORTE'],['Z OBJETOS']];
             for (each_value in datas){
 			var name=datas[each_value][0];
 			 var valueInsert=[name,name];
@@ -4476,7 +4476,7 @@ if (results.rows.length>0) {
 ['vértebra','vértebra.jpg','SEÑAS'],
 ['yogurt','yogurt.jpg','SEÑAS'],
 ['óvulo','óvulo.jpg','SEÑAS'],
-['útero','útero.jpg','SEÑAS'],
+['útero','útero.jpg','SEÑAS']
 
 ];
             for (each_value in datas){
