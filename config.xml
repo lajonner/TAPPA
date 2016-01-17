@@ -18,7 +18,7 @@
   * Mónica Elizabeth Chavez Estrada
 </author>
 
-<gap:plugin name="com.selector.file" source="npm" version="1.0.3" /> 
+<gap:plugin name="com.selector.file" source="npm" version="1.0.4" /> 
 
 <icon src="images/icon.png" />
 </widget>
