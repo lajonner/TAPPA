@@ -18,7 +18,8 @@
   * Mónica Elizabeth Chavez Estrada
 </author>
 
-<gap:plugin name="com.selector.file" source="npm" version="1.0.6" /> 
+<gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
+<gap:plugin name="com.selector.file" source="npm" version="1.0.7" /> 
 
 <icon src="images/icon.png" />
 </widget>
