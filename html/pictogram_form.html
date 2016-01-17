@@ -183,6 +183,7 @@ fileName=fld_file.name;
                                         
                                         <div class="form-group">
                                             <label>Archivo</label>
+                                            <button type="button" onclick="test()">xxx</button>
                                       <input type="file" id="fld_file" value="alert.png" >
 
                                         </div>
@@ -253,10 +254,11 @@ fileName=fld_file.name;
             break;
          } 
 
-/*function test(){
-getImage();
+function test(){
+cordova.exec(function(){
+                    },function(errx){alert(errx);} ,'SelectorFile', 'on',[{}]);  
 }
-
+/*
 	
    function getImage() {
             // Retrieve image file location from specified source
