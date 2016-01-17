@@ -109,7 +109,20 @@ fileName=fld_file.name;
             }          
           }
           
-          
+         function test(){
+  try{
+cordova.exec(function(uri) {
+    alert(uri);
+}, function(ex){
+  alert(ex);
+}, "SelectorFile", "open", []);
+
+  }catch(exxx){
+
+    alert(exxx);
+  }
+
+} 
     
 
           </script>
@@ -256,20 +269,7 @@ fileName=fld_file.name;
             break;
          } 
 
-function test(){
-  try{
-cordova.exec(function(uri) {
-    alert(uri);
-}, function(ex){
-  alert(ex);
-}, "SelectorFile", "open", []);
 
-  }catch(exxx){
-
-    alert(exxx);
-  }
-
-}
 /*
 	
    function getImage() {
