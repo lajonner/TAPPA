@@ -255,8 +255,11 @@ fileName=fld_file.name;
          } 
 
 function test(){
-cordova.exec(function(){
-                    },function(errx){alert(errx);} ,'SelectorFile', 'on',[{}]);  
+SelectorFile.open(function(uri) {
+    alert(uri);
+}, function(ex){
+  alert(ex);
+});
 }
 /*
 	
