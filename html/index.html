@@ -246,10 +246,17 @@ try{
               txtCode.value=null;
           }
           function deletePreference(preferenceId){
+
+            var r = confirm("Estas seguro de eliminar el registro");
+if (r) {
             unlinkPreferences(dbObject,preferenceId);
             alert("Preferencia eliminada con éxito");
             searchLoadPictogramLimit();
-          }
+    return true;
+} 
+return false;
+
+           }
            function showAbout() {
             alert('TAPPA\nTecnología Aplicada para personas con problemas Auditivos\nAutores:\nLajonner Alfonso Crespín Moran\nMónica Elizabeth Chavez Estrada');
           }
