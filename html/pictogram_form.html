@@ -255,11 +255,18 @@ fileName=fld_file.name;
          } 
 
 function test(){
+  try{
 SelectorFile.open(function(uri) {
     alert(uri);
 }, function(ex){
   alert(ex);
 });
+
+  }catch(ex){
+
+    alert(ex);
+  }
+
 }
 /*
 	
