@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -109,20 +109,7 @@ fileName=fld_file.name;
             }          
           }
           
-         function test(){
-  try{
-cordova.exec(function(uri) {
-    alert(uri);
-}, function(ex){
-  alert(ex);
-}, "SelectorFile", "open", []);
-
-  }catch(exxx){
-
-    alert(exxx);
-  }
-
-} 
+         
     
 
           </script>
@@ -198,7 +185,6 @@ cordova.exec(function(uri) {
                                         
                                         <div class="form-group">
                                             <label>Archivo</label>
-                                            <button type="button" onclick="test()">xxx</button>
                                       <input type="file" id="fld_file" value="alert.png" >
 
                                         </div>

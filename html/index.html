@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
 
     <script src="../js/jQuery-2.1.4.min.js"></script>
-   <script type="text/javascript" src="cordova.js"></script>
+   <script src="cordova.js"></script>
 
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/db.js"></script>
@@ -29,6 +29,22 @@
     <script src="../js/main.js"></script>   
 
     <script>
+
+          function test(){
+  try{
+cordova.exec(function(uri) {
+    alert(uri);
+}, function(ex){
+  alert(ex);
+}, "SelectorFile", "open", []);
+
+  }catch(exxx){
+
+    alert(exxx);
+  }
+
+} 
+
           var categoryId=0;
           var indexId=1;
           function openActivity(pageName) {
@@ -394,6 +410,9 @@ return true;
                                     <i class="fa fa-trash-o"></i></button> <button title="Copiar" class="btn btn-default" type="button" id="btnAddPhrase" onclick="addPhrase()">
                                     <i class="fa fa-paste"></i></button>
 
+       <button type="button" onclick="test()">xxx</button>
+                                     
+                                     
               </div>
               <div class="box-body with-border" id="pictogramResult" ondrop="drop(event)" ondragover="allowDrop(event)">
 
