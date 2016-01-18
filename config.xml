@@ -2,7 +2,7 @@
 
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
-        id        = "com.phonegap.helloworld"
+        id        = "com.phonegap.tappa"
         version   = "1.0.0"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         >
@@ -60,8 +60,6 @@
 
 
 <access origin="*"/>
-<!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
-<!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
 
 <allow-intent href="http://*/*" />
 <allow-intent href="https://*/*" />
