@@ -8,6 +8,7 @@
         >
 
 <preference name= "android-minSdkVersion" value="7"/>
+<preference name= "targetSdkVersion" value="17"/>
 
 <name>TAPPA</name>
 
