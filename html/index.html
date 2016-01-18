@@ -32,11 +32,15 @@
 
           function test(){
   try{
-cordova.exec(function(uri) {
-    alert(uri);
-}, function(ex){
-  alert(ex);
-}, "SelectorFile", "open", []);
+window.plugins.mfilechooser.open([], function (uri) {
+
+      alert(uri);
+
+    }, function (error) {
+
+        alert(error);
+
+    });
 
   }catch(exxx){
 

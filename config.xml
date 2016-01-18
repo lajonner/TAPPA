@@ -7,8 +7,6 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         >
 
-<preference name= "android-minSdkVersion" value="7"/>
-<preference name= "targetSdkVersion" value="17"/>
 
 <name>TAPPA</name>
 
@@ -42,7 +40,8 @@
 <gap:plugin name="org.apache.cordova.vibration" />
 <gap:plugin name="com.phonegap.plugins.pushplugin" />
 <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
-<gap:plugin name="com.selector.file" source="npm" version="1.0.7" /> 
+<gap:plugin name="cordova-plugin-mfilechooser" source="npm" version="1.0.2" /> 
+
 
 <icon src="images/icon.png" />
 
