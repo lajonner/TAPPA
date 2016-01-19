@@ -17,9 +17,8 @@
   * Mónica Elizabeth Chavez Estrada
 </author>
 
- <preference name="phonegap-version" value="3.1.0" />
  <preference name="keepRunning" value="false" />
-  
+
 <gap:plugin name="org.apache.cordova.device" />
 <gap:plugin name="org.apache.cordova.battery-status" />
 <gap:plugin name="org.apache.cordova.camera" />
