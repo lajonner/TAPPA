@@ -6,9 +6,8 @@ var WIDTH_IMAGE=100;
 var HEIGHT_IMAGE=100;
 var FOLDER_IMAGES="/";
 
-    if(!window.plugins) {
-        window.plugins = {};
-    }
+    
+
     
 /***INICIALIZACION DE CLASE DE OBJETOS EN BASE DE DATOS***/
     function objectTableDB(name,columns){
