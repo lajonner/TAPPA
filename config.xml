@@ -2,13 +2,11 @@
 
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.phonegap.tappa"
-        version   = "1.0.0"
-        xmlns:gap   = "http://phonegap.com/ns/1.0"
-        >
+        version   = "1.0.0">
 
-
-<name>TAPPA</name>
+<name>TAPPA_UPS</name>
 
 <description>
   Tecnología Aplicada para personas con problemas Auditivos
