@@ -20,14 +20,13 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../public/html/dist/css/skins/_all-skins.min.css">
            
-    <script src="../public/jquery/jQuery-2.1.4.min.js"></script>
-    <script src="cordova.js"></script>
-
-    <script src="../public/jquery/bootstrap.min.js"></script>
+    <script src="../public/jquery/jquery.min.js"></script>
+     <script src="../public/jquery/bootstrap.min.js"></script>
     <script src="../public/jquery/db.js"></script>
     <script src="../public/jquery/APP.js"></script>
     <script src="../public/jquery/categoryPictogram.js"></script> 
-
+<script src="cordova.js"></script>
+    
     
           <script>          
           var vars=getVars(document);
@@ -74,6 +73,31 @@
               }
               break;               
             }          
+          }
+          function testfilers(){
+try{
+
+alert("bien 1");
+            window.plugins.mfilechooser.open([], function (uri) {
+alert("bien 2");
+      
+      alert(uri);
+      alert("bien 3");
+
+    }, function (error) {
+      alert("mal 1");
+
+        alert(error);
+    
+    });
+
+
+}catch(err){
+  alert(err);
+  alert("mal 2");
+
+}
+
           }
           </script>
 
@@ -140,6 +164,8 @@
                                             <p class="help-block">Nombre de Categoría</p>
                                             
                                              <label>Carpeta</label>
+
+                                             <button type="button" id="btn1" onclick="testfilers()">prueba</button>
                                             <input class="form-control" id="fld_folder">
                                             <p class="help-block">Nombre de Carpeta</p>
                                             

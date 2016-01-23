@@ -4,29 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>TAPPA</title>
-    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="../public/html/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="../public/html/css/font-awesome-4.5.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
     <link rel="stylesheet" href="../public/html/css/ionicons-2.0.1/css/ionicons.min.css">
-    <!-- jvectormap -->
     <link rel="stylesheet" href="../public/html/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-    <!-- Theme style -->
     <link rel="stylesheet" href="../public/html/dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../public/html/dist/css/skins/_all-skins.min.css">
-           
-    <script src="../public/jquery/jQuery-2.1.4.min.js"></script>
-  <script src="cordova.js"></script>
-    <script src="../public/jquery/bootstrap.min.js"></script>
+    <script src="../public/jquery/jquery.min.js"></script>
+     <script src="../public/jquery/bootstrap.min.js"></script>
     <script src="../public/jquery/db.js"></script>
     <script src="../public/jquery/APP.js"></script>
     <script src="../public/jquery/pictogram.js"></script> 
-          <script>
+    <script src="cordova.js"></script>
+   <script>
           var fileName=null;
           var vars=getVars(document);
           function exitActivity(){
@@ -44,8 +35,8 @@
             var fld_category = document.getElementById("fld_category_id");
             var fld_file = document.getElementById("fld_file");                          
             var category = fld_category.selectedIndex;
-           var name = fld_name.value;
-var file = fld_file.value;
+            var name = fld_name.value;
+            var file = fld_file.value;
               if (name==null){
                  alert("Campo Nombre no puede estar vacio.VERIFIQUE!");
                 fld_name.focus();
@@ -57,7 +48,7 @@ var file = fld_file.value;
                  return false;
               }
               if (category<0){
- alert("Campo Categoría no puede estar vacio.VERIFIQUE!");
+                 alert("Campo Categoría no puede estar vacio.VERIFIQUE!");
                  fld_category.focus();
                  return false;
               }
@@ -78,7 +69,7 @@ var file = fld_file.value;
                 if (isValidateFields()){
                   var insertvals=getvals();
                   var fld_file = document.getElementById("fld_file");
-var fileName=fld_file.files[0].name;
+                  var fileName=fld_file.files[0].name;
                   insertvals["file"]=fileName;
                   insertDB("PICTOGRAM",insertvals);
                   alert("Registro creado con éxito");
@@ -87,18 +78,18 @@ var fileName=fld_file.files[0].name;
               break;
              case "2":
               if (isValidateFields()){
-               var id=Number(vars["id"]);
-                                var updatevals=getvals();
-              var fld_file = document.getElementById("fld_file");
-var fileName=fld_file.name;
-    if(fld_file.files!=null){
-      if(fld_file.files[0]!=null){
-     fileName=fld_file.files[0].name;    
-   }else{
-fileName=fld_file.name;
-   }     
-    }
-                  updatevals["file"]=fileName;
+                var id=Number(vars["id"]);
+                var updatevals=getvals();
+                var fld_file = document.getElementById("fld_file");
+                var fileName=fld_file.name;
+                if(fld_file.files!=null){
+                  if(fld_file.files[0]!=null){
+                     fileName=fld_file.files[0].name;    
+                  }else{
+                      fileName=fld_file.name;
+                   }     
+                } 
+                updatevals["file"]=fileName;
                 updateDB("PICTOGRAM",id,updatevals);
                 alert("Registro actualizado con éxito");
                 exitActivity();
@@ -106,26 +97,32 @@ fileName=fld_file.name;
               break;               
             }          
           }
-          
-         
-    function execordova(){
-      try {
 
-      window.plugins.mfilechooser.open([], function (uri) {
-      
-      alert(uri);
-      
-    }, function (error) {
-      
-        alert(error);
+
+
+function listDir(fileEntry)
+  {  
+    console.log(JSON.stringify(fileEntry.fullPath));
+
+    var directoryReader = fileEntry.createReader();
     
-    });
+    directoryReader.readEntries(onSuccess,onError);
+  }  
+
+function onSuccess(entries) 
+  {      
+    var myarray = [];
+    var myJSON = "";
+    for (var i = 0; i < entries.length; i++) 
+    {
+                      alert(entries[i].name)    
+                }
+  }
+
+            window.resolveLocalFileSystemURL(cordova.file.applicationDirectory + "www/NombreCarpeta/", listDir, fail);
+ 
 
 
-      }catch(err){
-        alert(err);
-      }
-    }
 
           </script>
   </head>

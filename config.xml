@@ -61,7 +61,7 @@
 </gap:config-file>
 
 
-<plugin name="cordova-plugin-whitelist" version="1" />
+<plugin name="cordova-plugin-whitelist" version="1.0.0" version="npm"/>
 
 
 <access origin="*"/>
