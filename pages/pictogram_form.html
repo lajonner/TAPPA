@@ -76,7 +76,7 @@
                 if (isValidateFields()){
                   var insertvals=getvals();
                   var fld_file = document.getElementById("fld_file");
-                  var fileName=fld_file.files[0].name;
+                  var fileName=fld_file.name;
                   insertvals["file"]=fileName;
                   insertDB("PICTOGRAM",insertvals);
                   alert("Registro creado con éxito");
@@ -110,7 +110,6 @@ try{
   
   window.plugins.mfilechooser.open([".png",".jpg"], function (uri) {
     try{
-     // alert(uri);
   $('#result_img_file').attr('src', uri);
   if (uri!=null){
     var filename = uri.substring(uri.lastIndexOf('/')+1);
@@ -129,8 +128,6 @@ try{
 
 }catch(err){
   alert(err);
-  alert("mal 2");
-
 }
 
           }
