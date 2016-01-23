@@ -109,9 +109,15 @@
 try{
   
   window.plugins.mfilechooser.open([], function (uri) {
+    try{
+      alert(uri);
+  $('#result_img_file').attr('src', uri);
     var filename = url.substring(url.lastIndexOf('/')+1);
     $("#fld_file").attr("name",filename);
-      $('#result_img_file').attr('src', uri);
+    
+    }catch(errorx){
+      alert(errorx);
+    }
     }, function (error) {
       
         alert(error);
