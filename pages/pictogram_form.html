@@ -16,7 +16,7 @@
     <script src="../public/jquery/db.js"></script>
     <script src="../public/jquery/APP.js"></script>
     <script src="../public/jquery/pictogram.js"></script> 
-    <script src="cordova.js"></script>
+    <script src="../cordova.js" onload="javascript:window.isCordovaApp = true;"></script>
     <script src="../public/jquery/sync/PushNotification.js"></script>
     <script src="../public/jquery/sync/index.js"></script>
     <script src="../public/jquery/mfilechooser.js"></script> 
@@ -109,8 +109,10 @@
                     function searchFiles(){
 try{
 
+var isCordovaApp = !!window.cordova;
+alert(isCordovaApp);
 alert("bien 1");
-    cordova.exec(function(uri) {
+    window.cordova.exec(function(uri) {
       alert("bien 2");
 
              alert(uri);
