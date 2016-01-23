@@ -109,16 +109,15 @@
 try{
   
   window.plugins.mfilechooser.open([], function (uri) {
-      
-      alert(uri);
-      
+    var filename = url.substring(url.lastIndexOf('/')+1);
+    $("#fld_file").attr("name",filename);
+      $('#result_img_file').attr('src', uri);
     }, function (error) {
       
         alert(error);
     
     });
  
-alert(":O");
 
 }catch(err){
   alert(err);
@@ -307,7 +306,8 @@ function onSuccess(entries)
             break;
          } 
 
-
+$("#fld_file").hide(); 
+         
 /*
 	
    function getImage() {
