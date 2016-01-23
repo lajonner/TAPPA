@@ -20,13 +20,8 @@
     <script src="../public/jquery/mfilechooser.js"></script> 
    <script>
 
-          function onDeviceReady(){
-alert("listo");
-          };
           $(document).ready(function () {
-            alert("1");
-           document.addEventListener('deviceready', onDeviceReady, false);
-  alert("2");
+            app.initialize(function(){alert(2);});
           });
 
           var fileName=null;
@@ -245,6 +240,13 @@ function onSuccess(entries)
                                     </form>
 
            </div><!-- /.row -->
+           <div class="app" style='display:none'> 
+        <h1>PhoneGap</h1>
+        <div id="deviceready" class="blink"> 
+            <p class="event listening">Connecting to Device</p> 
+            <p class="event received">Device is Ready</p> 
+        </div>   
+    </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
