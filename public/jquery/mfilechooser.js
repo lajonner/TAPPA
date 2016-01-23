@@ -2,30 +2,8 @@
  * cordova Maginsoft FileChooser plugin
  */
 
- var cordova = require('cordova');
- cordova.exec = cordova.exec || require('cordova/exec');
-
-(function(cordova){
-    alert(cordova);
-    var MFileChooser = function() {
-
-    };
-
-    MFileChooser.prototype.open = function(params, success, fail) {
-        return cordova.exec(function(args) {
-            success(args);
-        }, function(args) {
-            fail(args);
-        }, 'MFileChooser', 'open', params);
-    };
-
-    window.mfilechooser = new MFileChooser();
-    
-    // backwards compatibility
-    window.plugins = window.plugins || {};
-    window.plugins.mfilechooser = window.mfilechooser;
-})(cordova);//window.PhoneGap || window.Cordova || window.cordova
-
+var cordova = require('cordova');
+cordova.exec = cordova.exec || require('cordova/exec');
 
 var app = {
     initialize: function (callback) {
