@@ -110,7 +110,7 @@ try{
   
   window.plugins.mfilechooser.open([".png",".jpg"], function (uri) {
     try{
-      alert(uri);
+     // alert(uri);
   $('#result_img_file').attr('src', uri);
   if (uri!=null){
     var filename = uri.substring(uri.lastIndexOf('/')+1);
