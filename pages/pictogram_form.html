@@ -16,13 +16,18 @@
     <script src="../public/jquery/db.js"></script>
     <script src="../public/jquery/APP.js"></script>
     <script src="../public/jquery/pictogram.js"></script> 
-    <script src="phonegap.js"></script>
+    <script src="cordova.js"></script>
     <script src="../public/jquery/mfilechooser.js"></script> 
    <script>
 
-          document.addEventListener('deviceready', function () {
-           console.log("device is ready") 
-         }, false);
+          function onDeviceReady(){
+alert("listo");
+          };
+          $(document).ready(function () {
+            alert("1");
+           document.addEventListener('deviceready', onDeviceReady, false);
+  alert("2");
+          });
 
           var fileName=null;
           var vars=getVars(document);
