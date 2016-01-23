@@ -107,9 +107,6 @@
 
                     function searchFiles(){
 try{
-  alert("bien 1");
-alert(window.cordova);
-alert(window.cordova.exec);
     window.cordova.exec(function(uri) {
       alert("bien 2");
 
@@ -120,9 +117,9 @@ alert(window.cordova.exec);
           alert("mal 1");
 
             alert(error);
-        }, 'MFileChooser', 'open',[]);
+        }, 'MFileChooser', 'open',[{}]);
  
-
+alert(":O");
 
 }catch(err){
   alert(err);
