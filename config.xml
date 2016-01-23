@@ -3,7 +3,7 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-         id        = "com.phonegap.helloworld"
+        id        = "com.phonegap.helloworld"
         version   = "1.0.0">
 
 <name>TAPPA_UPS</name>
@@ -17,6 +17,7 @@
   * Mónica Elizabeth Chavez Estrada
 </author>
 
+<!-- Core plugins -->
 <gap:plugin name="org.apache.cordova.battery-status" />
 <gap:plugin name="org.apache.cordova.camera" />
 <gap:plugin name="org.apache.cordova.media-capture" />
@@ -38,12 +39,26 @@
 
 <gap:plugin name="com.phonegap.plugins.pushplugin" />
 
-<gap:plugin name="cordova-plugin-mfilechooser" source="npm" /> 
+<gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
+<gap:plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
+<gap:plugin name="cordova-plugin-mfilechooser" source="npm" version="1.0.2"/> 
 
 
-<icon src="public/images/icon.png" />
+<!--<gap:plugin name="cordova-plugin-mauron85-background-geolocation-phonegapbuild" version="0.7.3" source="npm" />-->
 
 
+<!-- Third party plugins -->
+<!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
+<!--
+    <gap:plugin name="com.phonegap.plugins.barcodescanner" />
+-->
+
+<!-- Define app icon for each platform. -->
+<icon src="public/images/icon.png" width="72" height="72" />
+<icon src="public/images/icon.png" width="48" height="48" />
+<icon src="public/images/icon.png" width="36" height="36" />
+
+<!-- Define app splash screen for each platform. -->
 <gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:qualifier="port-ldpi" />
 <gap:splash src="res/screen/android/screen-mdpi-portrait.png"       gap:platform="android" gap:qualifier="port-mdpi" />
 <gap:splash src="res/screen/android/screen-hdpi-portrait.png"       gap:platform="android" gap:qualifier="port-hdpi" />
@@ -60,11 +75,9 @@
 <string>100</string>
 </gap:config-file>
 
-
-<gap:plugin name="cordova-plugin-whitelist" version="1.0.0" version="npm" />
-
-
 <access origin="*"/>
+<!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
+<!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
 
 <allow-intent href="http://*/*" />
 <allow-intent href="https://*/*" />

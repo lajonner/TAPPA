@@ -74,31 +74,6 @@
               break;               
             }          
           }
-          function testfilers(){
-try{
-
-alert("bien 1");
-            window.plugins.mfilechooser.open([], function (uri) {
-alert("bien 2");
-      
-      alert(uri);
-      alert("bien 3");
-
-    }, function (error) {
-      alert("mal 1");
-
-        alert(error);
-    
-    });
-
-
-}catch(err){
-  alert(err);
-  alert("mal 2");
-
-}
-
-          }
           </script>
 
   </head>
@@ -165,8 +140,7 @@ alert("bien 2");
                                             
                                              <label>Carpeta</label>
 
-                                             <button type="button" id="btn1" onclick="testfilers()">prueba</button>
-                                            <input class="form-control" id="fld_folder">
+                                           <input class="form-control" id="fld_folder">
                                             <p class="help-block">Nombre de Carpeta</p>
                                             
                                              <label>Descripción</label>
