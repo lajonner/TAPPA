@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../public/html/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="../public/html/dist/css/skins/_all-skins.min.css">
     <script src="../public/jquery/jquery.min.js"></script>
+    <script src="../public/jquery/jquery.min.js"></script>
      <script src="../public/jquery/bootstrap.min.js"></script>
     <script src="../public/jquery/db.js"></script>
     <script src="../public/jquery/APP.js"></script>
@@ -21,7 +22,7 @@
    <script>
 
           $(document).ready(function () {
-            app.initialize(function(){alert(6);});
+            app.initialize(function(){});
           });
 
           var fileName=null;
@@ -106,10 +107,9 @@
 
                     function searchFiles(){
 try{
-
-var isCordovaApp = !!window.cordova;
-alert(isCordovaApp);
-alert("bien 1");
+  alert("bien 1");
+alert(window.cordova);
+alert(window.cordova.exec);
     window.cordova.exec(function(uri) {
       alert("bien 2");
 

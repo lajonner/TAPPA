@@ -13,15 +13,11 @@ var app = {
     // Bind any events that are required on startup. Common events are: 
     // 'load', 'deviceready', 'offline', and 'online'. 
     bindEvents: function () {
-        alert(1);
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        alert(2);
     },
 
     onDeviceReady: function () {
-        alert(3);
         app.receivedEvent('deviceready');
-        alert(4);
     },
     // Update DOM on a Received Event 
     receivedEvent: function (id) {
@@ -31,7 +27,6 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
         console.log('Received Event: ' + id);
-        alert(5);
       //  if (device.platform == 'android' || device.platform == 'Android') {
             //alert("Register called");
             //tu Project ID aca!! 
