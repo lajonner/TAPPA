@@ -41,7 +41,7 @@
 
 <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" /> 
 <gap:plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
-<gap:plugin name="cordova-plugin-mfilechooser" source="npm" version="1.0.2"/> 
+<gap:plugin name="cordova-plugin-mfilechooser" source="npm" version="1.0.4"/> 
 
 
 <!--<gap:plugin name="cordova-plugin-mauron85-background-geolocation-phonegapbuild" version="0.7.3" source="npm" />-->
