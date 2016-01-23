@@ -16,12 +16,15 @@
     <script src="../public/jquery/db.js"></script>
     <script src="../public/jquery/APP.js"></script>
     <script src="../public/jquery/pictogram.js"></script> 
-    <script src="cordova.js"></script>
+    <script src="phonegap.js"></script>
     <script src="../public/jquery/mfilechooser.js"></script> 
    <script>
 
-          document.addEventListener('deviceready', function () { console.log("device is ready") }, false);
-          
+          document.addEventListener('deviceready', function () {
+           console.log("device is ready") 
+           alert(window.cordova):
+         }, false);
+
           var fileName=null;
           var vars=getVars(document);
           function exitActivity(){

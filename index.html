@@ -5,15 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="public/jquery/jquery.min.js"></script>
-    <script src="cordova.js"></script>
     <script src="public/jquery/bootstrap.min.js"></script>
     <script src="public/jquery/db.js"></script>
     <script src="public/jquery/APP.js"></script>
     <script src="public/jquery/main.js"></script>
-   
+    <script src="cordova.js"></script>
+    <script src="../public/jquery/mfilechooser.js"></script> 
+  
     <script>
         $(document).ready(function () {
-            loadPage('pages/index.html');
+          document.addEventListener('deviceready', function () { console.log("device is ready") }, false);
+          loadPage('pages/index.html');
+            
         });
     </script>	
   </head>
