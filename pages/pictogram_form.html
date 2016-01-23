@@ -107,17 +107,16 @@
 
                     function searchFiles(){
 try{
-    window.cordova.exec(function(uri) {
-      alert("bien 2");
-
-             alert(uri);
-             alert("bien 3");
-
-        }, function(error) {
-          alert("mal 1");
-
-            alert(error);
-        }, 'MFileChooser', 'open',[{}]);
+  
+  window.plugins.mfilechooser.open([], function (uri) {
+      
+      alert(uri);
+      
+    }, function (error) {
+      
+        alert(error);
+    
+    });
  
 alert(":O");
 
