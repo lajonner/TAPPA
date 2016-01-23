@@ -1,7 +1,8 @@
 /**
  * cordova Maginsoft FileChooser plugin
  */
- (function(cordova){
+(function(cordova){
+    alert(cordova);
     var MFileChooser = function() {
 
     };
@@ -46,16 +47,15 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
         console.log('Received Event: ' + id);
-        var pushNotification = window.plugins.pushNotification;
-        if (device.platform == 'android' || device.platform == 'Android') {
+      //  if (device.platform == 'android' || device.platform == 'Android') {
             //alert("Register called");
             //tu Project ID aca!! 
 //            pushNotification.register(this.successHandler, this.errorHandler, { "senderID": PROJECT_ID_GOOGLE, "ecb": "app.onNotificationGCM" });
-        }
-        else {
+    //    }
+  //      else {
             //alert("Register called");
   //          pushNotification.register(this.successHandler, this.errorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "app.onNotificationAPN" });
-        }
+//        }
     },
     // result contains any message sent from the plugin call 
     successHandler: function (result) {
