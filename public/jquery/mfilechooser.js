@@ -3,7 +3,7 @@
  */
 
 
-/*var app = {
+var app = {
     initialize: function (callback) {
         this.bindEvents();
         callback();
@@ -50,4 +50,4 @@
         alert(error);
     }
     
-};*/
+};
