@@ -1,6 +1,10 @@
 /**
  * cordova Maginsoft FileChooser plugin
  */
+
+ var cordova = require('cordova');
+ cordova.exec = cordova.exec || require('cordova/exec');
+
 (function(cordova){
     alert(cordova);
     var MFileChooser = function() {
@@ -20,7 +24,7 @@
     // backwards compatibility
     window.plugins = window.plugins || {};
     window.plugins.mfilechooser = window.mfilechooser;
-})(window.PhoneGap || window.Cordova || window.cordova);
+})(cordova);//window.PhoneGap || window.Cordova || window.cordova
 
 
 var app = {
