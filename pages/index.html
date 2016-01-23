@@ -100,7 +100,7 @@ el.parentNode.removeChild(el);
         var divContainer = document.createElement("div");
         var divID="phrase_x"+indexId;
             divContainer.setAttribute("id",divID);
-            divContainer.setAttribute("style","float:left; width:10.0%;");
+            divContainer.setAttribute("style","float:left; width:"+SIZE_PHRASE+"%;");
             divContainer.setAttribute("draggable","true");
             var innerHtmlBody='<a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+divID+"'"+')"><i class="fa fa-trash-o"></i></a><b/><label id="label_phrase_x'+indexId+'"  ondragstart="drag(event)" draggable="true">'+txtPictogram+'</label></b>';
             divContainer.innerHTML=innerHtmlBody;
