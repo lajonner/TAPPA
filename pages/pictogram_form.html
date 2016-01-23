@@ -108,12 +108,14 @@
                     function searchFiles(){
 try{
   
-  window.plugins.mfilechooser.open([], function (uri) {
+  window.plugins.mfilechooser.open([".png",".jpg"], function (uri) {
     try{
       alert(uri);
   $('#result_img_file').attr('src', uri);
-    var filename = url.substring(url.lastIndexOf('/')+1);
-    $("#fld_file").attr("name",filename);
+  if (uri!=null){
+    var filename = url.substring(uri.lastIndexOf('/')+1);
+    $("#fld_file").attr("name",filename);    
+  }
     
     }catch(errorx){
       alert(errorx);
