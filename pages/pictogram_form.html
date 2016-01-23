@@ -109,6 +109,10 @@ try{
 
 alert("bien 1");
 
+var cordova = require('cordova');
+alert("1");
+cordova.exec = cordova.exec || require('cordova/exec');
+alert("2");
 
     cordova.exec(function(uri) {
       alert("bien 2");
