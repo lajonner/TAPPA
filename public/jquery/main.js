@@ -1,4 +1,4 @@
-var SIZE_PHRASE="20.00";
+var SIZE_PHRASE="25.00";
     /**obtener limite de registros a obtener**/
 
      function getLimitRecords(){
