@@ -103,28 +103,6 @@
 
         </nav>
       </header>
-      <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-          <!-- Sidebar user panel -->
-          <!-- sidebar menu: : style can be found in sidebar.less -->
-          <ul class="sidebar-menu">
-            <li class="header">Menú</li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-edit"></i> <span>Opciones</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#" id="option_create" onclick="saveRecord()"><i class="fa fa-circle-o"></i>Grabar</a></li>
-                <li><a href="#" id="option_exit" onclick="exitActivity()"><i class="fa fa-circle-o"></i>Salir</a></li>
-              </ul>
-            </li>
-            </ul>
-        </section>
-        <!-- /.sidebar -->
-      </aside>
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -146,7 +124,9 @@
                                              <label>Descripción</label>
                                             <input class="form-control" id="fld_description">
                                             <p class="help-block">Descripción de la categoría</p>
-                                        </div>   
+                                        </div>  
+                                        <button class="btn btn-default" type="button"  onclick="saveRecord()" >Grabar<i class="fa fa-save"></i></button>
+                                        <button class="btn btn-default" type="button"  onclick="exitActivity()">Cancelar<i class="fa fa-ban"></i></button>
            </div><!-- /.row -->
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->

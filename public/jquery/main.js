@@ -3,6 +3,9 @@ var SIZE_PHRASE="25.00";
 
      function getLimitRecords(){
         var limitRecords = document.getElementById("limitRecords");
+            if(limitRecords.value.length<=0){
+                return "0";
+            }
         return limitRecords.value;
     }
 
@@ -98,7 +101,7 @@ writePictogramList(tx,results);
         divContainer.setAttribute("style","float:left; width:"+SIZE_PHRASE+"%;");
         divContainer.setAttribute("draggable","true");
         var innerHtmlBody='<img  class="img-responsive pad" title="'+imageContainer.getAttribute("title")+'" src="'+imageContainer.getAttribute("src")+'" id="result_'+imageId+'" width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'"/>'
-        innerHtmlBody+='<br/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+DIV_ID+"'"+')"><i class="fa fa-trash-o"></i></a>';
+            innerHtmlBody+='<br/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+DIV_ID+"'"+')"><i class="fa fa-trash-o"></i></a>';
         innerHtmlBody+="<label id='lbl_"+imageId+"' >"+imageContainer.getAttribute("title")+"</label>"
         divContainer.innerHTML=innerHtmlBody;
         return divContainer;
@@ -113,7 +116,8 @@ writePictogramList(tx,results);
         divContainer.setAttribute("id", ""+newPhraseId+"cp")
         divContainer.setAttribute("style","float:left; width:"+SIZE_PHRASE+"%;");
         divContainer.setAttribute("draggable","true");
-        var innerHtmlBody='<b/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+newPhraseId+"cp'"+')"><i class="fa fa-trash-o"></i></a>';
+var innerHtmlBody='<img  class="img-responsive pad" title="'+phraseLabel.innerHTML+'"  width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'" src="empty_reference.png"/>';
+         innerHtmlBody+='<br/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+newPhraseId+"cp'"+')"><i class="fa fa-trash-o"></i></a>';
         innerHtmlBody+='<label id="label_'+newPhraseId+'cp"  ondragstart="drag(event)" draggable="true">'+phraseLabel.innerHTML+'</label></b>';
         divContainer.innerHTML=innerHtmlBody;
         return divContainer;
@@ -138,7 +142,7 @@ writePictogramList(tx,results);
             }
         }
             dbObject.db.transaction(function(tx) {
-            tx.executeSql('SELECT pp.id,pp.name,pp.code from pictogram_preferences pp where pp.id<>0 '+where+' order by pp.code,pp.name asc', [], function(tx,results){
+            tx.executeSql('SELECT pp.id,pp.name,pp.code from pictogram_preferences pp where pp.id<>0 '+where+' order by pp.code,pp.name asc  LIMIT '+getLimitRecords()+'', [], function(tx,results){
       writePreferencesList(dbObject,tx, results);
             });
         },dbObject.errorDataBase);  

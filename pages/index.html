@@ -35,7 +35,7 @@
           function searchLoadPictogramLimit(){
             var inputRecords=document.getElementById("limitRecords");
             if(inputRecords.value.length<=0){
-                inputRecords.value=10;
+                //inputRecords.value=10;
             }
             var optionValue = document.getElementById("cboOption").value;
             var divPictograms = document.getElementById("pictogramList");
@@ -102,7 +102,9 @@ el.parentNode.removeChild(el);
             divContainer.setAttribute("id",divID);
             divContainer.setAttribute("style","float:left; width:"+SIZE_PHRASE+"%;");
             divContainer.setAttribute("draggable","true");
-            var innerHtmlBody='<a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+divID+"'"+')"><i class="fa fa-trash-o"></i></a><b/><label id="label_phrase_x'+indexId+'"  ondragstart="drag(event)" draggable="true">'+txtPictogram+'</label></b>';
+            var innerHtmlBody='<img  class="img-responsive pad" title="'+txtPictogram+'"  width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'" src="empty_reference.png"/>';
+
+            innerHtmlBody+='<a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+divID+"'"+')"><i class="fa fa-trash-o"></i></a><b/><label id="label_phrase_x'+indexId+'"  ondragstart="drag(event)" draggable="true">'+txtPictogram+'</label></b>';
             divContainer.innerHTML=innerHtmlBody;
             divPictograms.appendChild(divContainer);
             indexId=indexId+1;
@@ -389,8 +391,8 @@ return true;
            <div class="box-header with-border" id="pictogramResultHeader">
 
              <button class="btn btn-default" type="button" id="btnClear" onclick="clearResult()" title="Limpiar">
-                                    <i class="fa fa-trash-o"></i></button> <button title="Copiar" class="btn btn-default" type="button" id="btnAddPhrase" onclick="addPhrase()">
-                                    <i class="fa fa-paste"></i></button>
+                                    <i class="fa fa-trash-o"></i>Borrar palabras</button> <button title="Copiar" class="btn btn-default" type="button" id="btnAddPhrase" onclick="addPhrase()">
+                                    <i class="fa fa-paste"></i>Copiar busqueda</button>
               </div>
               <div class="box-body with-border" id="pictogramResult" ondrop="drop(event)" ondragover="allowDrop(event)">
 

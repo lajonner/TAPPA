@@ -1,6 +1,9 @@
 
-    function getLimitRecords(){
+     function getLimitRecords(){
         var limitRecords = document.getElementById("limitRecords");
+            if(limitRecords.value.length<=0){
+                return "0";
+            }
         return limitRecords.value;
     }
 

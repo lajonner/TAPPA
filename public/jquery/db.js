@@ -210,6 +210,10 @@ if (results.rows.length>0) {
             row=results.rows.item(0);
             if (row["counter"]<=0){
             var datas=[
+['buenas noches','buenas noches.png','otros'],
+['buenas tardes','buenas tardes.png','otros'],
+['buenos dias','buenos dias.png','otros'],
+['buen provecho','buen provecho.png','otros'],
 ['a','a.png','otros'],
 ['abajo','abajo.png','otros'],
 ['abecedario','abecedario.png','otros'],
