@@ -159,8 +159,9 @@ var innerHtmlBody='<img  class="img-responsive pad" title="'+phraseLabel.innerHT
             divContainer.setAttribute("id", "preference_"+row["id"])           
             divContainer.setAttribute("style","float:left; width:100%");
             var divLabel = document.createElement("div");         
-            divLabel.setAttribute("style","float:left; width:"+SIZE_PHRASE+"%;")
-            divLabel.innerHTML="<a href='#' class='btn btn-xs' onclick='deletePreference("+row["id"]+")'><i class='fa fa-trash-o'></i></a><a href='#' onclick='copyPreference(dbObject,"+row["id"]+")'>"+row["code"]+"</a><br/><label>"+row["name"]+"</label>";
+            divLabel.setAttribute("style","float:left; width:"+SIZE_PHRASE+"%;");
+            var innerHtmlBody="<a href='#' class='btn btn-xs' onclick='deletePreference("+row["id"]+")'><i class='fa fa-trash-o'></i></a><a href='#' onclick='copyPreference(dbObject,"+row["id"]+")'>"+row["code"]+"</a><br/><label>"+row["name"]+"</label>";
+            divLabel.innerHTML=innerHtmlBody;
             divContainer.appendChild(divLabel);                 
             tx.executeSql('SELECT ppl.id,ppl.phrase,p.id as pictogram_id,p.name as name,p.file as file,pc.name as category_name,pc.folder as folder,ppl.preference_id from pictogram_preferences_line ppl left join pictogram p on p.id=ppl.pictogram_id left join pictogram_category pc on pc.id=p.category_id where ppl.preference_id='+preferenceId+' order by ppl.sequence asc', [],writePreferencesPictogramList 
         ,dbObject.errorDataBase);  
@@ -188,7 +189,8 @@ var innerHtmlBody='<img  class="img-responsive pad" title="'+phraseLabel.innerHT
                         divContainerPhrase.setAttribute("id","phrase_"+newRow["id"]+"x"+flag);
                         divContainerPhrase.setAttribute("style","float:left; width:"+SIZE_PHRASE+"%;");
                         divContainerPhrase.setAttribute("draggable","true");
-                        var innerHtmlBodyPhrase='<b/><label id="label_phrase_'+newRow["id"]+'x'+flag+'"  onclick="copyPictogram('+"'"+'label_phrase_'+newRow["id"]+'x'+flag+''+"'"+',2)">'+newRow["phrase"]+'</label></b>';
+                        var innerHtmlBodyPhrase='<img  class="img-responsive pad" title="'+row["name"]+'"  width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'" src="empty_reference.png"/>';
+                        innerHtmlBodyPhrase+='<br/><label id="label_phrase_'+newRow["id"]+'x'+flag+'"  onclick="copyPictogram('+"'"+'label_phrase_'+newRow["id"]+'x'+flag+''+"'"+',2)">'+newRow["phrase"]+'</label></b>';
                         divContainerPhrase.innerHTML=innerHtmlBodyPhrase;
                         indexId=indexId+1;
                         divContainer.appendChild(divContainerPhrase);
@@ -230,7 +232,8 @@ var innerHtmlBody='<img  class="img-responsive pad" title="'+phraseLabel.innerHT
             divContainerPhrase.setAttribute("id",DIV_ID);
             divContainerPhrase.setAttribute("style","float:left; width:"+SIZE_PHRASE+"%;");
             divContainerPhrase.setAttribute("draggable","true");
-            var innerHtmlBodyPhrase='<br/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+DIV_ID+"'"+')"><i class="fa fa-trash-o"></i></a>';
+            var innerHtmlBodyPhrase='<img  class="img-responsive pad" title="'+row["name"]+'"  width="'+WIDTH_IMAGE+'" height="'+HEIGHT_IMAGE+'" src="empty_reference.png"/>';
+            innerHtmlBodyPhrase+='<br/><a href="#" class="btn btn-xs" onclick="dropDivById('+"'"+DIV_ID+"'"+')"><i class="fa fa-trash-o"></i></a>';
             innerHtmlBodyPhrase+='<label id="label_phrase_'+newRow["id"]+'y'+flag+'"  ondragstart="drag(event)" draggable="true">'+newRow["phrase"]+'</label></b>';
             divContainerPhrase.innerHTML=innerHtmlBodyPhrase;
             indexId=indexId+1;
